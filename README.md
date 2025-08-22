@@ -34,7 +34,7 @@
 
 ---
 
-## Future Enhancements
+## 🚀 Future Enhancements
 - Mobile App using React Native.  
 - Gamification features (badges and career progress tracking).  
 - Integration with LinkedIn API.  
@@ -42,7 +42,7 @@
 
 ---
 
-## Contributors
+## 🙌 Contributors
 - Mohamed Hassan Abdallah Afify [ Team Leader ]
 - Mohamed Sherif Kamal
 - Amr Mousa Mohamed 
