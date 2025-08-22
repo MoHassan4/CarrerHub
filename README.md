@@ -1,6 +1,6 @@
 # CareerHub – Career Guidance & Job Matching Platform
 
-## Objectives
+## 🎯 Objectives
 - Help students and graduates discover suitable career paths.  
 - Provide tools to create and manage CVs.  
 - Offer access to job and internship opportunities.  
@@ -8,29 +8,29 @@
 
 ---
 
-## Description
+## 📖 Description
 **CareerHub** is a web application built with the **MERN Stack** designed to support students and graduates in their career journey.  
 
--  **For Students & Graduates:**  
+- 🔹 **For Students & Graduates:**  
   - Skill assessment quizzes.  
   - Job and internship recommendations based on profile data.  
   - CV Builder to create and manage resumes.  
   - Dashboard to track applications and saved opportunities.  
 
--  **For Companies & Employers:**  
+- 🔹 **For Companies & Employers:**  
   - Post job and internship opportunities.  
   - Search and filter candidates by skills, education, and experience.  
   - Applicant tracking and management dashboard.  
 
 ---
 
-## Tech Stack
+## ⚙️ Tech Stack
 - **Frontend:** React.js, Redux Toolkit, Tailwind CSS  
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB (Mongoose)  
 - **Realtime:** Socket.IO (for notifications and updates)  
 - **Authentication:** JWT (JSON Web Tokens)  
-- **Deployment:** Docker + Heroku/Vercel  
+- **Deployment:** Docker + Heroku/Vercel    
 
 ---
 
