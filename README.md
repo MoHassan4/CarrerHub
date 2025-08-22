@@ -34,3 +34,18 @@
 
 ---
 
+## Future Enhancements
+- Mobile App using React Native.  
+- Gamification features (badges and career progress tracking).  
+- Integration with LinkedIn API.  
+- Email notifications for new job matches.  
+
+---
+
+## Contributors
+- Mohamed Hassan Abdallah Afify [ Team Leader ]
+- Mohamed Sherif Kamal
+- Amr Ahmed
+- Ziad Mohamed Abdelkareem
+- Kareem
+
