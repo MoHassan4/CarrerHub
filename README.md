@@ -45,7 +45,7 @@
 ## Contributors
 - Mohamed Hassan Abdallah Afify [ Team Leader ]
 - Mohamed Sherif Kamal
-- Amr Ahmed
+- Amr Mousa Mohamed 
 - Ziad Mohamed Abdelkareem
-- Kareem
+- Kareem Adel Abbas
 
