@@ -60,7 +60,7 @@
 **Name:** Mohamed Sherif Kamal  
 **Role:** Frontend Development with React js
 
-**Name:** Kareem Adel Abbas 
+**Name:** Kareem Adel Abbas  
 **Role:** Frontend Development with React js
 
 ---
