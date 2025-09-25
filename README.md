@@ -52,25 +52,25 @@
 ---
 
 ر
-## 👨‍💻 Frontend Specialist
+## 👨‍💻 Frontend Team
 
 **Name:** Ziad Mohamed Abdelkareem  
-**Role:** Frontend Development with React js
+**Role:** Frontend Development
 
 **Name:** Mohamed Sherif Kamal  
-**Role:** Frontend Development with React js
+**Role:** Frontend Development
 
 **Name:** Kareem Adel Abbas  
-**Role:** Frontend Development with React js
+**Role:** Frontend Development
 
 ---
 
-## 🖥️ Backend Specialist
+## 🖥️ Backend Team
 
 **Name:** Mohamed Hassan Abdallah Afify  
-**Role:** Backend Development with Nodejs
+**Role:** Backend Development
 
 **Name:** Amr Mousa Mohamed  
-**Role:** Backend Development with Nodejs
+**Role:** Backend Development
 
 ---
