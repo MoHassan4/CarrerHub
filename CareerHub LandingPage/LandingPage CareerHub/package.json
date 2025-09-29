@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "'": "file:awesome.me/kit-KIT_CODE@latest'",
-    "@fortawesome/fontawesome-svg-core": "^7.0.1",
-    "bootstrap": "^5.3.8"
-  }
-}
