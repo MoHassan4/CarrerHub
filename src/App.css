@@ -12,11 +12,11 @@ nav li a, nav button {
     border-radius: 0.5rem;
 }
 
-.navbar-brand, .navbar-brand:hover, .navbar ul li a, .li-su-btns button a {
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus, .navbar ul li a, .li-su-btns button a {
     color: var(--primary-color);
 }
 
-.navbar ul li a:hover, .dropdown-menu li a:hover {
+.navbar ul li a:hover, .dropdown-menu li a:hover, .navbar ul li a:focus {
     background-color: rgb(255, 87, 34, 0.125);
     color: var(--primary-color);
 }
