@@ -42,35 +42,12 @@
 
 ---
 
-## 🙌 Contributors
-- Mohamed Hassan Abdallah Afify [ Team Leader ]
-- Mohamed Sherif Kamal
-- Amr Mousa Mohamed 
-- Ziad Mohamed Abdelkareem
-- Kareem Adel Abbas
+## 👨‍💻 Team Members
 
----
-
-ر
-## 👨‍💻 Frontend Team
-
-**Name:** Ziad Mohamed Abdelkareem  
-**Role:** Frontend Development
-
-**Name:** Mohamed Sherif Kamal  
-**Role:** Frontend Development
-
-**Name:** Kareem Adel Abbas  
-**Role:** Frontend Development
-
----
-
-## 🖥️ Backend Team
-
-**Name:** Mohamed Hassan Abdallah Afify  
-**Role:** Backend Development
-
-**Name:** Amr Mousa Mohamed  
-**Role:** Backend Development
+- Mohamed Hassan Abdallah Afify [ Team Leader ] (Frontend & Backend)
+- Mohamed Sherif Kamal (Frontend & Backend)
+- Amr Mousa Mohamed (Frontend)
+- Ziad Mohamed Abdelkareem (Frontend)
+- Kareem Adel Abbas (Frontend)
 
 ---

@@ -1,0 +1,56 @@
+/* 
+-------------------- NavBar Styles ----------------------
+ */
+nav {
+    background-color: rgba(255, 255, 255, 0.75);
+    -webkit-backdrop-filter: blur(1rem);
+    backdrop-filter: blur(1rem);
+    border-bottom: 0.125rem solid #eee;
+}
+
+nav li a, nav button {
+    border-radius: 0.5rem;
+}
+
+.navbar-brand, .navbar-brand:hover, .navbar ul li a, .li-su-btns button a {
+    color: var(--primary-color);
+}
+
+.navbar ul li a:hover, .dropdown-menu li a:hover {
+    background-color: rgb(255, 87, 34, 0.125);
+    color: var(--primary-color);
+}
+
+.dropdown-toggle {
+    color: var(--primary-color) !important;
+}
+
+.dropdown-toggle:hover {
+    color: var(--primary-color) !important;
+}
+
+.dropdown-menu {
+    background-color: #fff;
+}
+
+.dropdown-menu li {
+    padding-inline: 0.5rem;
+}
+
+.dropdown-menu li a {
+    border-radius: 0.5rem;
+}
+
+.li-su-btns button {
+    outline: 1px solid var(--primary-color);
+    transition: 0.3s;
+}
+
+.li-su-btns button:hover {
+    background-color: rgb(255, 87, 34, 0.125) !important;
+}
+
+.li-su-btns button:hover a {
+    color: var(--primary-color);
+}
+/* -------------------------------------------------- */
