@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #ff5722;
+}
+
+.home {
+  margin-top: 7rem !important;
+}
+
+.home .header {
+    margin-bottom: 2rem;
+}
+
+.home .header span {
+  color: var(--primary-color);
+}
+
+.search-form .myBtn {
+  background: var(--primary-color);
+  font-size: 1.4rem;
+}
+
+.tags {
+  color: var(--primary-color);
+}
+
+.tag {
+  border: 0.02rem solid black;
+  border-radius: 1rem;
+}
+
+.features .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.features .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(255, 87, 34, 0.3);
+}
+
+.feature-icon {
+  transition: transform 0.6s;
+}
+
+.feature-card:hover .feature-icon {
+  transform: rotate(-25deg) scale(1.2);
+}

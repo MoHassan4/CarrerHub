@@ -1,7 +1,7 @@
 function NavBar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg position-fixed w-100">
+      <nav className="navbar navbar-expand-lg position-fixed w-100 top-0 z-3">
         <div className="container-fluid">
           <a className="navbar-brand fs-3 fw-bold pe-2" href="#">
             CareerHub

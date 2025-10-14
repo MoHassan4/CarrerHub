@@ -12,7 +12,11 @@ nav li a, nav button {
     border-radius: 0.5rem;
 }
 
-.navbar-brand, .navbar-brand:hover, .navbar-brand:focus, .navbar ul li a, .li-su-btns button a {
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus{
+    color: var(--primary-color);
+}
+ 
+.navbar-brand {
     color: var(--primary-color);
 }
 
@@ -21,9 +25,9 @@ nav li a, nav button {
     color: var(--primary-color);
 }
 
-.dropdown-toggle {
+/* .dropdown-toggle {
     color: var(--primary-color) !important;
-}
+} */
 
 .dropdown-toggle:hover {
     color: var(--primary-color) !important;
@@ -42,8 +46,13 @@ nav li a, nav button {
 }
 
 .li-su-btns button {
-    outline: 1px solid var(--primary-color);
+    background-color: var(--primary-color) !important;
+    /* outline: 1px solid var(--primary-color); */
     transition: 0.3s;
+}
+
+.li-su-btns button a {
+    color: white;
 }
 
 .li-su-btns button:hover {
