@@ -1,7 +1,7 @@
 import "../css/Home.css";
 import Tag from "./HomeParts/tag";
 import RealStories from "./HomeParts/RealStories";
-import mobApp from "../assets/Gemini_Generated_Image_f3kui3f3kui3f3ku.png";
+import mobApp from "../assets/App.png";
 import FutuersCard from "./HomeParts/FutuersCard";
 import JopByCountry from "./HomeParts/JopByCountry";
 
