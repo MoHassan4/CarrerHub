@@ -50,3 +50,17 @@
 .feature-card:hover .feature-icon {
   transform: rotate(-25deg) scale(1.2);
 }
+
+.myBtn {
+  padding-block: 0.7rem;
+  transition: 0.3s;
+}
+
+.myBtn:hover {
+  background-color: orangered !important;
+}
+
+.job-country-card {
+  display: flex !important;
+  justify-content: center !important;
+}

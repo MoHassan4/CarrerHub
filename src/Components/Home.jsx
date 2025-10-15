@@ -19,7 +19,7 @@ import {
 
 function Home() {
   return (
-    <div className="home container">
+    <div className="home container pb-3 pt-4">
       <div className=" header welcome">
         <h1 className="text-center">
           Welcome to <span>CareerHub</span>
@@ -62,7 +62,7 @@ function Home() {
         <button className="btn myBtn px-4 text-white w-50">Find Now</button>
       </div>
 
-      <div className="popular-searches my-5">
+      <div className="popular-searches my-5 text-center text-lg-start">
         <h3 className="mt-5">Popular Searches</h3>
         <div className="row mt-3 g-2 tags">
           <div className="col-6 col-md-auto">
@@ -86,7 +86,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="image-section d-flex justify-content-center align-items-center my-5">
+      <div className="image-section d-flex justify-content-center align-items-center my-5 text-center text-lg-start">
         <div className="text">
           <h2 className="fw-bold mb-3">Your Dream Job is Just a Click Away!</h2>
           <p className="text-muted mb-4">

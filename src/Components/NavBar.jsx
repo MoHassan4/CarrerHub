@@ -1,11 +1,13 @@
+import { Link } from "react-router";
+
 function NavBar() {
   return (
     <>
       <nav className="navbar navbar-expand-lg position-fixed w-100 top-0 z-3">
         <div className="container-fluid">
-          <a className="navbar-brand fs-3 fw-bold pe-2" href="#">
+          <Link className="navbar-brand fs-3 fw-bold pe-2" to="/">
             CareerHub
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -23,60 +25,62 @@ function NavBar() {
           >
             <ul className="navbar-nav gap-3">
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">
+                <Link className="nav-link" aria-current="page" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="#">
                   Features
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="#">
                   Find Jobs
-                </a>
+                </Link>
               </li>
               <li className="nav-item dropdown">
-                <a
+                <Link
                   className="nav-link dropdown-toggle"
                   href="#"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Dropdown link
-                </a>
+                  More
+                </Link>
                 <ul className="dropdown-menu text-center text-lg-start">
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
+                    <Link className="dropdown-item" to="#">
+                      Pricing
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
+                    <Link className="dropdown-item" to="#">
+                      FAQs
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
+                    <Link className="dropdown-item" to="#">
+                      About
+                    </Link>
                   </li>
                 </ul>
               </li>
             </ul>
             <div className="li-su-btns d-flex flex-column flex-lg-row gap-3 justify-content-center">
-              <button className="bg-transparent border-0 p-2">
-                <a className="li-btn text-decoration-none" href="#">
-                  Login
-                </a>
-              </button>
-              <button className="bg-transparent border-0 p-2">
-                <a className="su-btn text-decoration-none" href="#">
-                  SignUp
-                </a>
-              </button>
+              <Link
+                className="li-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
+                to="/login"
+              >
+                Login
+              </Link>
+              <Link
+                className="su-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
+                to="/signup"
+              >
+                SignUp
+              </Link>
             </div>
           </div>
         </div>

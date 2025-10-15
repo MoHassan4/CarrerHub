@@ -1,16 +1,22 @@
 import { Routes, Route } from "react-router";
 import NavBar from "./Components/NavBar";
-import "./App.css";
 import Home from "./Components/Home";
+import Login from "./Components/login/login";
+import Signup from "./Components/signup/signup";
+import Footer from "./Components/Footer.Jsx";
+import "./css/NavBar.css";
+import "./css/Footer.css";
 
 function App() {
   return (
     <>
       <NavBar />
-      <Home />
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<Home />}></Route>
-      </Routes> */}
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+      </Routes>
+      <Footer />
     </>
   );
 }

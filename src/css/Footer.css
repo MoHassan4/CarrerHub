@@ -1,0 +1,16 @@
+.sub-btn {
+    background-color: var(--primary-color) !important;
+    transition: 0.3s;
+}
+
+.sub-btn:hover {
+    background-color: orangered !important;
+}
+
+footer ul li a:hover {
+    color: #000 !important;
+}
+
+footer .brand {
+    color: var(--primary-color) !important;
+}
