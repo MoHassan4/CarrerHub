@@ -1,0 +1,73 @@
+*{
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.login-container {
+  width : max-content;
+  padding: 20px;
+}
+
+.login-card {
+  border: none;
+  border-radius: 8px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-link {
+  color: #ff5722;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.form-control:focus {
+  border-color: #ff5722;
+  box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.25);
+}
+
+.login-toggle-btn {
+  text-decoration: none;
+  padding: 0.375rem 0.75rem;
+  border: none;
+}
+
+.login-toggle-btn:hover {
+  color: #666 !important;
+  text-decoration: none;
+}
+
+.login-toggle-btn:focus {
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.login-button {
+  background-color: #ff5722 !important;
+  border-color: #ff5722 !important;
+  color: white !important;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #e64a19;
+  border-color: #e64a19;
+}
+
+.login-button:focus {
+  background-color: #e64a19;
+  border-color: #e64a19;
+  box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.25);
+}
