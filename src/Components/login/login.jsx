@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Login.css";
+import "./login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -105,3 +105,4 @@ const Login = () => {
 };
 
 export default Login;
+
