@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Signup.css";
+import "./signup.css";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -145,3 +145,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
