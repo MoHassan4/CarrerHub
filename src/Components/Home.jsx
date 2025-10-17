@@ -1,5 +1,5 @@
 import "../css/Home.css";
-import Tag from "./HomeParts/tag";
+import Tag from "./HomeParts/Tag";
 import RealStories from "./HomeParts/RealStories";
 import mobApp from "../assets/App.png";
 import FutuersCard from "./HomeParts/FutuersCard";
