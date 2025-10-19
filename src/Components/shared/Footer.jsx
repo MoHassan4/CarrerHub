@@ -1,9 +1,10 @@
 import { Link } from "react-router";
+import "../../css/cssShared/Footer.css";
 
 function Footer() {
   return (
     <>
-      <footer className="container pt-5">
+      <footer className="pt-5 px-5 bg-light">
         <div className="row">
           <div className="col-6 col-md-2 mb-3">
             <h5>Main Links</h5>

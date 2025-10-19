@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Header from "./shared/Header";
-import SearchForm from "./shared/SearchForm";
+import Header from "../Components/shared/Header";
+import SearchForm from "../Components/shared/SearchForm";
 
 function JopSearch() {
   const popularJobTitles = [

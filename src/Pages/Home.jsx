@@ -1,12 +1,13 @@
 import "../css/Home.css";
 
-import Tag from "./HomeParts/Tag";
-import RealStories from "./HomeParts/RealStories";
 import mobApp from "../assets/App.png";
-import FutuersCard from "./HomeParts/FutuersCard";
-import JopByCountry from "./HomeParts/JopByCountry";
-import Header from "./shared/Header";
-import SearchForm from "./shared/SearchForm";
+
+import Tag from "../Components/HomeParts/Tag";
+import RealStories from "../Components/HomeParts/RealStories";
+import FutuersCard from "../Components/shared/FutuersCard";
+import JopByCountry from "../Components/shared/JopByCountry";
+import Header from "../Components/shared/Header";
+import SearchForm from "../Components/shared/SearchForm";
 
 import EgyptImg from "../assets/countriesImages/egypt.avif";
 import UAEImg from "../assets/countriesImages/UAE.jpg";

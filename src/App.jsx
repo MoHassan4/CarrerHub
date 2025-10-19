@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router";
-import NavBar from "./Components/NavBar";
-import Home from "./Components/Home";
-import Login from "./Components/login/login";
-import Signup from "./Components/signup/signup";
-import Footer from "./Components/Footer.jsx";
-import JopSearch from "./Components/JopSearch.jsx";
-import "./css/NavBar.css";
-import "./css/Footer.css";
+import NavBar from "./Components/shared/NavBar.jsx";
+import Footer from "./Components/shared/Footer.jsx";
+import Home from "./Pages/Home.jsx";
+import Login from "./Pages/login.jsx";
+import Signup from "./Pages/signup.jsx";
+import JopSearch from "./Pages/JopSearch.jsx";
+import PageNotFound from "./Components/pageNotFound/PageNotFound.jsx";
+
+import "./css/cssShared/NavBar.css";
+import "./css/cssShared/Footer.css";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/jopSearch" element={<JopSearch />}></Route>
+        <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
       <Footer />
     </>

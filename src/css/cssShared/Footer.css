@@ -1,3 +1,7 @@
+footer {
+    margin-top: 3rem;
+}
+
 .sub-btn {
     background-color: var(--primary-color) !important;
     transition: 0.3s;
