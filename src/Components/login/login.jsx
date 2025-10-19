@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container d-flex align-items-center justify-content-center min-vh-100 w-100">
+    <div className="login-container d-flex align-items-center min-vh-100 w-100">
       <div className="container d-flex justify-content-center">
         <div className="row justify-content-center responsive">
           <div className="col-12 col-sm-12 col-md-12 col-lg-12">

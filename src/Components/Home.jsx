@@ -1,9 +1,12 @@
 import "../css/Home.css";
+
 import Tag from "./HomeParts/Tag";
 import RealStories from "./HomeParts/RealStories";
 import mobApp from "../assets/App.png";
 import FutuersCard from "./HomeParts/FutuersCard";
 import JopByCountry from "./HomeParts/JopByCountry";
+import Header from "./shared/Header";
+import SearchForm from "./shared/SearchForm";
 
 import EgyptImg from "../assets/countriesImages/egypt.avif";
 import UAEImg from "../assets/countriesImages/UAE.jpg";
@@ -20,47 +23,13 @@ import {
 function Home() {
   return (
     <div className="home container pb-3 pt-4">
-      <div className=" header welcome">
-        <h1 className="text-center">
-          Welcome to <span>CareerHub</span>
-        </h1>
-        <p className="text-center">Your gateway to a successful career!</p>
-      </div>
+      <Header
+        h1="Welcome To"
+        inSpan="CareerHub"
+        p="Your gateway to a successful career!"
+      />
 
-      <div className="search-form my-5 d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2">
-        <input
-          type="search"
-          className="form-control border-1 p-3"
-          placeholder="Search for jobs..."
-          aria-label="Search"
-        />
-
-        <select
-          className="form-select border-1 border-start p-3"
-          defaultValue="Egypt"
-        >
-          <option value="Egypt">Egypt</option>
-          <option value="Saudi Arabia">Saudi Arabia</option>
-          <option value="United Arab Emirates">United Arab Emirates</option>
-          <option value="Qatar">Qatar</option>
-          <option value="Kuwait">Kuwait</option>
-          <option value="Bahrain">Bahrain</option>
-          <option value="Oman">Oman</option>
-          <option value="Jordan">Jordan</option>
-          <option value="Lebanon">Lebanon</option>
-          <option value="Iraq">Iraq</option>
-          <option value="Syria">Syria</option>
-          <option value="Yemen">Yemen</option>
-          <option value="Libya">Libya</option>
-          <option value="Sudan">Sudan</option>
-          <option value="Morocco">Morocco</option>
-          <option value="Tunisia">Tunisia</option>
-          <option value="Algeria">Algeria</option>
-          <option value="Palestine">Palestine</option>
-        </select>
-
-        <button className="btn myBtn px-4 text-white w-50">Find Now</button>
-      </div>
+      <SearchForm />
 
       <div className="popular-searches my-5 text-center text-lg-start">
         <h3 className="mt-5">Popular Searches</h3>

@@ -1,0 +1,11 @@
+:root {
+  --primary-color: #ff5722;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header span {
+  color: var(--primary-color) !important;
+}

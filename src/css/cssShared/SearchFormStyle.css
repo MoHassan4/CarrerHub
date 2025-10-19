@@ -1,0 +1,9 @@
+:root {
+  --primary-color: #ff5722;
+}
+
+
+.search-form .myBtn {
+  background: var(--primary-color);
+  font-size: 1.4rem;
+}

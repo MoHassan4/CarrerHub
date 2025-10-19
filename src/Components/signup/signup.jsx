@@ -24,7 +24,7 @@ const Signup = () => {
 
   return (
     <div className="signup-container d-flex align-items-center justify-content-center min-vh-100 w-100">
-      <div className="container d-flex justify-content-center pt-5">
+      <div className="container d-flex justify-content-center">
         <div className="row justify-content-center">
           <div className="col-12 col-sm-10 col-md-9 col-lg-12">
             <div className="card shadow signup-card">

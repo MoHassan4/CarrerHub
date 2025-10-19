@@ -4,6 +4,7 @@ import Home from "./Components/Home";
 import Login from "./Components/login/login";
 import Signup from "./Components/signup/signup";
 import Footer from "./Components/Footer.jsx";
+import JopSearch from "./Components/JopSearch.jsx";
 import "./css/NavBar.css";
 import "./css/Footer.css";
 
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/jopSearch" element={<JopSearch />}></Route>
       </Routes>
       <Footer />
     </>

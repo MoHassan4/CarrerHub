@@ -8,23 +8,6 @@
   --primary-color: #ff5722;
 }
 
-.home {
-  margin-top: 7rem !important;
-}
-
-.home .header {
-    margin-bottom: 2rem;
-}
-
-.home .header span {
-  color: var(--primary-color);
-}
-
-.search-form .myBtn {
-  background: var(--primary-color);
-  font-size: 1.4rem;
-}
-
 .tags {
   color: var(--primary-color);
 }
