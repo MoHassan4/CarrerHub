@@ -1,0 +1,29 @@
+.jobs-container {
+    grid-template-columns: repeat(4, calc(25% - 1.125rem));
+    grid-template-rows: repeat(auto, auto);
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .jobs-container {
+    grid-template-columns: repeat(3, calc(33.33% - 1.125rem));
+    grid-template-rows: repeat(auto, auto);
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .jobs-container {
+    grid-template-columns: repeat(2, calc(50% - 1.125rem));
+    grid-template-rows: repeat(auto, auto);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .jobs-container {
+    grid-template-columns: repeat(1, 100%);
+    grid-template-rows: repeat(auto, auto);
+    }
+}
+
+.job-country-card {
+    
+}

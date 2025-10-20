@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg position-fixed w-100 top-0 z-3 bg-white shadow-sm">
+      <nav className="navbar navbar-expand-lg position-fixed w-100 top-0 z-3 shadow-sm">
         <div className="container-fluid">
           <Link className="navbar-brand fs-3 fw-bold pe-2" to="/">
             CareerHub
