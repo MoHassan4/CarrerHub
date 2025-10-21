@@ -1,25 +1,18 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import "../css/signup.css";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [countryCode, setCountryCode] = useState("+20");
-  const [mobileNumber, setMobileNumber] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Signup:", {
-      firstName,
-      lastName,
-      email,
-      password,
-      countryCode,
-      mobileNumber,
-    });
+  const onSubmit = (data) => {
+    console.log("Signup Data:", data);
   };
 
   return (
@@ -34,23 +27,30 @@ const Signup = () => {
                 </h1>
                 <p className="text-center text-muted mb-4">
                   Already have an account?{" "}
-                  <a href="#" className="signup-link">
+                  <Link to="/login" className="signup-link">
                     Sign in
-                  </a>
+                  </Link>
                 </p>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
                     <div className="col-md-6 mb-3">
                       <label className="form-label">First name *</label>
                       <input
                         type="text"
                         placeholder="Enter first name"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        className="form-control"
-                        required
+                        className={`form-control ${
+                          errors.firstName ? "is-invalid" : ""
+                        }`}
+                        {...register("firstName", {
+                          required: "First name is required",
+                        })}
                       />
+                      {errors.firstName && (
+                        <div className="invalid-feedback">
+                          {errors.firstName.message}
+                        </div>
+                      )}
                     </div>
 
                     <div className="col-md-6 mb-3">
@@ -58,11 +58,18 @@ const Signup = () => {
                       <input
                         type="text"
                         placeholder="Enter last name"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        className="form-control"
-                        required
+                        className={`form-control ${
+                          errors.lastName ? "is-invalid" : ""
+                        }`}
+                        {...register("lastName", {
+                          required: "Last name is required",
+                        })}
                       />
+                      {errors.lastName && (
+                        <div className="invalid-feedback">
+                          {errors.lastName.message}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -71,11 +78,22 @@ const Signup = () => {
                     <input
                       type="email"
                       placeholder="Enter email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="form-control"
-                      required
+                      className={`form-control ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                          message: "Invalid email format",
+                        },
+                      })}
                     />
+                    {errors.email && (
+                      <div className="invalid-feedback">
+                        {errors.email.message}
+                      </div>
+                    )}
                   </div>
 
                   <div className="mb-3">
@@ -84,11 +102,23 @@ const Signup = () => {
                       <input
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="form-control"
-                        required
+                        className={`form-control ${
+                          errors.password ? "is-invalid" : ""
+                        }`}
+                        {...register("password", {
+                          required: "Password is required",
+                          minLength: {
+                            value: 6,
+                            message: "Password must be at least 6 characters",
+                          },
+                        })}
                       />
+                      {errors.password && (
+                        <div className="invalid-feedback">
+                          {errors.password.message}
+                        </div>
+                      )}
+
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
@@ -107,25 +137,37 @@ const Signup = () => {
                     <label className="form-label">Mobile number *</label>
                     <div className="input-group">
                       <select
-                        value={countryCode}
-                        onChange={(e) => setCountryCode(e.target.value)}
                         className="form-select signup-country-select"
                         style={{ maxWidth: "120px" }}
+                        {...register("countryCode", { required: true })}
+                        defaultValue="+20"
                       >
                         <option value="+20">🇪🇬 +20</option>
                         <option value="+1">🇺🇸 +1</option>
                         <option value="+44">🇬🇧 +44</option>
                         <option value="+91">🇮🇳 +91</option>
                       </select>
+
                       <input
                         type="tel"
                         placeholder="XXX-XXXXXXX"
-                        value={mobileNumber}
-                        onChange={(e) => setMobileNumber(e.target.value)}
-                        className="form-control"
-                        required
+                        className={`form-control ${
+                          errors.mobileNumber ? "is-invalid" : ""
+                        }`}
+                        {...register("mobileNumber", {
+                          required: "Mobile number is required",
+                          pattern: {
+                            value: /^[0-9]{7,15}$/,
+                            message: "Invalid mobile number",
+                          },
+                        })}
                       />
                     </div>
+                    {errors.mobileNumber && (
+                      <div className="invalid-feedback d-block">
+                        {errors.mobileNumber.message}
+                      </div>
+                    )}
                   </div>
 
                   <button
@@ -145,4 +187,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

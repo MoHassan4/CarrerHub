@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import "../css/login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [stayLoggedIn, setStayLoggedIn] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login:", { email, password, stayLoggedIn });
+  const onSubmit = (data) => {
+    console.log("Login:", data);
   };
 
   return (
@@ -24,30 +27,55 @@ const Login = () => {
                 </h1>
                 <p className="text-center text-muted mb-4">
                   Don't have an account yet?{" "}
-                  <a href="#" className="login-link">
+                  <Link to="/signup" className="login-link">
                     Register here
-                  </a>
+                  </Link>
                 </p>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-3">
                     <input
                       type="text"
                       placeholder="Email address or username"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="form-control form-control-lg"
+                      className={`form-control form-control-lg ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
+                      {...register("email", {
+                        required: "Email or username is required",
+                        pattern: {
+                          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                          message: "Enter a valid email address",
+                        },
+                      })}
                     />
+                    {errors.email && (
+                      <div className="invalid-feedback">
+                        {errors.email.message}
+                      </div>
+                    )}
                   </div>
 
                   <div className="mb-3 position-relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="form-control form-control-lg"
+                      className={`form-control form-control-lg ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 6,
+                          message: "Password must be at least 6 characters",
+                        },
+                      })}
                     />
+                    {errors.password && (
+                      <div className="invalid-feedback">
+                        {errors.password.message}
+                      </div>
+                    )}
+
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -71,10 +99,9 @@ const Login = () => {
                     <div className="form-check">
                       <input
                         type="checkbox"
-                        checked={stayLoggedIn}
-                        onChange={(e) => setStayLoggedIn(e.target.checked)}
                         className="form-check-input"
                         id="stayLoggedIn"
+                        {...register("stayLoggedIn")}
                       />
                       <label
                         className="form-check-label"
@@ -105,4 +132,3 @@ const Login = () => {
 };
 
 export default Login;
-
