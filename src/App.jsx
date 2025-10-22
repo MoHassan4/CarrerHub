@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Routes, Route } from "react-router";
 import NavBar from "./Components/shared/NavBar.jsx";
 import Footer from "./Components/shared/Footer.jsx";
@@ -25,16 +24,7 @@ function App() {
         <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
       <Footer />
-=======
-import "./App.css";
-
-function App() {
-
-  return (
-    <>
->>>>>>> abd4f8e42082ef8fca9590f8830578e2bfebee79
-    </>
-  );
+</>)
 }
 
 export default App;
