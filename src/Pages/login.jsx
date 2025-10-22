@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/login.css";
+import { getUsersData } from "../services/Users.Login_SignUp.service";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -11,8 +14,35 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Login:", data);
+  const onSubmit = async (data) => {
+    const response = await getUsersData();
+    const users = response.data;
+
+    const foundUser = users.find((u) => {
+      return u.email === data.email && u.password === data.password;
+    });
+
+    if (foundUser) {
+      localStorage.setItem("user", JSON.stringify(foundUser));
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful 🎉",
+        text: `Welcome back, ${foundUser.firstName}!`,
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        navigate("/");
+        window.location.reload();
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        html: `
+          Invalid Email or Password
+        `,
+      });
+    }
   };
 
   return (

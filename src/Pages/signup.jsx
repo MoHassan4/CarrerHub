@@ -1,19 +1,77 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import "../css/signup.css";
+import {
+  getUsersData,
+  setUserData,
+} from "../services/Users.Login_SignUp.service";
+
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import Swal from "sweetalert2";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Signup Data:", data);
+  const onSubmit = async (data) => {
+    const fullData = {
+      ...data,
+      mobileNumber: `${data.countryCode}${data.mobileNumber}`,
+    };
+
+    const usersRes = await getUsersData();
+    const users = usersRes.data;
+
+    const emailExists = users.some((user) => user.email === fullData.email);
+    const phoneExists = users.some(
+      (user) => user.mobileNumber === fullData.mobileNumber
+    );
+
+    if (emailExists || phoneExists) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        html: `
+    Email already used!<br/>
+    Or mobile number already used!
+  `,
+      });
+      return;
+    }
+
+    await setUserData(fullData).then(() => {
+      Swal.fire({
+        icon: "success",
+        title: "Title here",
+        text: "Your Account Have Been Created",
+      }).then(() => {
+        const safeUser = {
+          firstName: fullData.firstName,
+          lastName: fullData.lastName,
+          email: fullData.email,
+        };
+        localStorage.setItem("user", JSON.stringify(safeUser));
+        reset();
+        navigate("/");
+        window.location.reload();
+      });
+    });
   };
+
+  const [, SetUserData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    mobileNumber: "",
+  });
 
   return (
     <div className="signup-container d-flex align-items-center justify-content-center min-vh-100 w-100">

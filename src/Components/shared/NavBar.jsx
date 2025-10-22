@@ -1,6 +1,16 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 function NavBar() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg position-fixed w-100 top-0 z-3 shadow-sm">
@@ -93,18 +103,50 @@ function NavBar() {
             </ul>
 
             <div className="li-su-btns d-flex flex-column flex-lg-row gap-3 justify-content-center">
-              <Link
-                className="li-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
-                to="/login"
-              >
-                Login
-              </Link>
-              <Link
-                className="su-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
-                to="/signup"
-              >
-                SignUp
-              </Link>
+              {user ? (
+                <div className="d-flex flex-row align-items-center justify-content-center gap-2 my-3 my-lg-0">
+                  {/* User icon */}
+                  <FontAwesomeIcon
+                    icon={faUserCircle}
+                    size="2x"
+                    className="text-warning"
+                  />
+
+                  {/* User name */}
+                  <span
+                    className="d-none d-lg-block fw-bold text-truncate"
+                    style={{ maxWidth: "120px" }}
+                  >
+                    {user.firstName} {user.lastName}
+                  </span>
+
+                  {/* Logout button */}
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => {
+                      localStorage.removeItem("user");
+                      window.location.reload();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    className="li-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    className="su-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
+                    to="/signup"
+                  >
+                    SignUp
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

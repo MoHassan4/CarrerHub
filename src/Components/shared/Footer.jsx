@@ -101,7 +101,7 @@ function Footer() {
               <h5>Subscribe to our newsletter</h5>
               <p>Monthly digest of what's new and exciting from us.</p>
               <div className="d-flex flex-column flex-sm-row w-100 gap-2">
-                <label for="newsletter1" className="visually-hidden">
+                <label htmlFor="newsletter1" className="visually-hidden">
                   Email address
                 </label>
                 <input
@@ -133,14 +133,14 @@ function Footer() {
                 aria-label="Instagram"
               >
                 <svg className="bi" width="24" height="24">
-                  <use xlink:href="#instagram"></use>
+                  <use xlinkHref="#instagram"></use>
                 </svg>
               </Link>
             </li>
             <li className="ms-3">
               <Link className="link-body-emphasis" to="#" aria-label="Facebook">
                 <svg className="bi" width="24" height="24" aria-hidden="true">
-                  <use xlink:href="#facebook"></use>
+                  <use xlinkHref="#facebook"></use>
                 </svg>
               </Link>
             </li>
