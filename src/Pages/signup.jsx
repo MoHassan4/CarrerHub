@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Swal from "sweetalert2";
+import CreateNewAccount from "./CreateNewAccount";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -227,13 +228,14 @@ const Signup = () => {
                       </div>
                     )}
                   </div>
-
-                  <button
-                    type="submit"
-                    className="btn btn-lg w-100 signup-button"
-                  >
-                    Create my account
-                  </button>
+                  <Link to="/create-new-account">
+                    <button
+                      type="submit"
+                      className="btn btn-lg w-100 signup-button"
+                    >
+                      Create my account
+                    </button>
+                  </Link>
                 </form>
               </div>
             </div>

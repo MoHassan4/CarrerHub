@@ -1,0 +1,51 @@
+button:not(.navbar-toggler) {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+    border: none !important;
+    transition: 0.3s;
+}
+
+button:not(.navbar-toggler):hover {
+    background-color: orangered !important;
+}
+
+input:focus, select:focus {
+    border: 1px solid var(--primary-color) !important;
+    outline: 1px solid var(--primary-color) !important;
+}
+
+.form-btns .back-btn, .exp-field .back-btn {
+    background-color: #fff !important;
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.form-btns .back-btn:hover, .exp-field .back-btn:hover {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+@media screen and (max-width: 576px) {
+    .img-container img {
+        width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .img-container img {
+        width: 75% !important;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .img-container img {
+        width: 50% !important;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .img-container img {
+        width: 25% !important;
+    }
+}

@@ -10,6 +10,7 @@ import PageNotFound from "./Components/pageNotFound/PageNotFound.jsx";
 
 import "./css/cssShared/NavBar.css";
 import "./css/cssShared/Footer.css";
+import CreateNewAccount from "./Pages/CreateNewAccount.jsx";
 
 function App() {
   return (
@@ -19,12 +20,17 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
+        <Route
+          path="/create-new-account"
+          element={<CreateNewAccount />}
+        ></Route>
         <Route path="/jopSearch" element={<JopSearch />}></Route>
         <Route path="/jobs-by-location" element={<JobsByLocation />}></Route>
         <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
       <Footer />
-</>)
+    </>
+  );
 }
 
 export default App;
