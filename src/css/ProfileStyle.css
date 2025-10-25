@@ -1,0 +1,70 @@
+:root {
+  --primary-color: #ff5722;
+  --primary-hover: #e64a19;
+}
+
+.basic-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  transition: 1s;
+}
+
+.basic-info:hover {
+  transform: scale(0.9);
+}
+
+.basic-info p:first-child {
+  font-weight: 600;
+  color: #333;
+}
+
+.basic-info p:last-child {
+  color: white;
+  /* background: var(--primary-color); */
+  font-weight: 500;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+/* Apply animation */
+.basic-infos, .experience, .education {
+  animation: fadeInUp 0.8s ease-in;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Add delay */
+.basic-infos {
+  animation-delay: 0.1s;
+}
+
+.experience {
+  animation-delay: 0.3s;
+}
+
+.education {
+  animation-delay: 0.5s;
+}
+
+
+
+
