@@ -106,11 +106,13 @@ function NavBar() {
               {user ? (
                 <div className="d-flex flex-row align-items-center justify-content-center gap-2 my-3 my-lg-0">
                   {/* User icon */}
+                  <Link className="profile-link" to="/profile">
                   <FontAwesomeIcon
                     icon={faUserCircle}
                     size="2x"
                     className="text-warning"
                   />
+                  </Link>
 
                   {/* User name */}
                   <span

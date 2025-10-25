@@ -69,4 +69,8 @@ nav li a, nav button {
 .li-su-btns button:hover {
     color: var(--primary-color);
 }
+
+.li-su-btns .profile-link {
+    background-color: transparent !important;
+}
 /* -------------------------------------------------- */

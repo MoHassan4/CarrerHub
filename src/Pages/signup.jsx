@@ -60,7 +60,7 @@ const Signup = () => {
         };
         localStorage.setItem("user", JSON.stringify(safeUser));
         reset();
-        navigate("/");
+        navigate("/create-new-account");
         window.location.reload();
       });
     });
@@ -228,14 +228,12 @@ const Signup = () => {
                       </div>
                     )}
                   </div>
-                  <Link to="/create-new-account">
                     <button
                       type="submit"
                       className="btn btn-lg w-100 signup-button"
                     >
                       Create my account
                     </button>
-                  </Link>
                 </form>
               </div>
             </div>

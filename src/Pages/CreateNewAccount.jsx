@@ -7,8 +7,8 @@ function CreateNewAccount() {
   return (
     <>
       <div className="container">
-        {/* <TargetJobForm /> */}
-        {/* <PersonalDetails /> */}
+        <TargetJobForm />
+        <PersonalDetails />
         <ExperienceForm />
       </div>
     </>
