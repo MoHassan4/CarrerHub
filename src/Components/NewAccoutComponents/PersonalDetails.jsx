@@ -1,135 +1,176 @@
-function PersonalDetails() {
+import { useState } from "react";
+
+function PersonalDetails({ next, back }) {
+  const [birthDate, setBirthDate] = useState("");
+  const [resCountry, setResCountry] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [gender, setGender] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!birthDate || !resCountry || !nationality || !gender) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    setError("");
+    next();
+  };
+
   return (
-    <>
-      <div className="container">
-        <form action="#" className="form-control p-4">
-          <h3>Personal Details</h3>
-          <p>Tell us a bit about you to get started</p>
-          <hr />
-          <div className="form-body d-flex flex-column gap-3 pb-5">
-            <img
-              src="https://simplyilm.com/wp-content/uploads/2017/08/temporary-profile-placeholder-1.jpg"
-              alt="profile pic"
-              className="w-25 rounded-circle"
+    <div className="container">
+      <form className="form-control p-4" onSubmit={handleSubmit}>
+        <h3>Personal Details</h3>
+        <p>Tell us a bit about you to get started</p>
+        <hr />
+
+        <div className="form-body d-flex flex-column gap-3 pb-5">
+          <img
+            src="https://simplyilm.com/wp-content/uploads/2017/08/temporary-profile-placeholder-1.jpg"
+            alt="profile pic"
+            className="w-25 rounded-circle align-self-center"
+          />
+
+          {/* Birth Date */}
+          <div className="bd-inputs d-flex flex-column">
+            <label htmlFor="bd" className="form-label">
+              Birth date *
+            </label>
+            <input
+              type="date"
+              id="bd"
+              className="p-2 rounded form-control"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              required
             />
-            <div className="names-input d-flex flex-column flex-md-row gap-3">
-              <div className="fn-field d-flex flex-column w-100">
-                <label htmlFor="fn" className="form-label">
-                  First name *
-                </label>
-                <input
-                  type="text"
-                  name="fn"
-                  id="fn"
-                  className="p-2 rounded border-1"
-                />
-              </div>
-              <div className="ln-field d-flex flex-column w-100">
-                <label htmlFor="ln" className="form-label">
-                  Last name *
-                </label>
-                <input
-                  type="text"
-                  name="ln"
-                  id="ln"
-                  className="p-2 rounded border-1"
-                />
-              </div>
-            </div>
-            <div className="bd-inputs d-flex flex-column">
-              <label htmlFor="bd" className="form-label">
-                Birth date *
-              </label>
+          </div>
+
+          {/* Residence Country */}
+          <div className="res-country-input d-flex flex-column">
+            <label htmlFor="res-country" className="form-label">
+              Residence country *
+            </label>
+            <select
+              id="res-country"
+              className="p-2 rounded form-control"
+              value={resCountry}
+              onChange={(e) => setResCountry(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Select country
+              </option>
+              <option value="egypt">Egypt</option>
+              <option value="uae">UAE</option>
+              <option value="saudi">Saudi Arabia</option>
+              <option value="kuwait">Kuwait</option>
+              <option value="qatar">Qatar</option>
+              <option value="bahrain">Bahrain</option>
+              <option value="morocco">Morocco</option>
+              <option value="tunisia">Tunisia</option>
+              <option value="algeria">Algeria</option>
+              <option value="libya">Libya</option>
+              <option value="sudan">Sudan</option>
+              <option value="jordan">Jordan</option>
+              <option value="lebanon">Lebanon</option>
+              <option value="oman">Oman</option>
+              <option value="iraq">Iraq</option>
+              <option value="palestine">Palestine</option>
+            </select>
+          </div>
+
+          {/* Nationality */}
+          <div className="nationality d-flex flex-column">
+            <label htmlFor="na" className="form-label">
+              Nationality *
+            </label>
+            <select
+              id="na"
+              className="p-2 rounded form-control"
+              value={nationality}
+              onChange={(e) => setNationality(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Select nationality
+              </option>
+              <option value="egypt">Egypt</option>
+              <option value="uae">UAE</option>
+              <option value="saudi">Saudi Arabia</option>
+              <option value="kuwait">Kuwait</option>
+              <option value="qatar">Qatar</option>
+              <option value="bahrain">Bahrain</option>
+              <option value="morocco">Morocco</option>
+              <option value="tunisia">Tunisia</option>
+              <option value="algeria">Algeria</option>
+              <option value="libya">Libya</option>
+              <option value="sudan">Sudan</option>
+              <option value="jordan">Jordan</option>
+              <option value="lebanon">Lebanon</option>
+              <option value="oman">Oman</option>
+              <option value="iraq">Iraq</option>
+              <option value="palestine">Palestine</option>
+            </select>
+          </div>
+
+          {/* Gender */}
+          <div className="gender-input">
+            <p className="form-label">Gender *</p>
+            <div className="m-or-f d-flex gap-3">
               <input
-                type="date"
-                name="bd"
-                id="bd"
-                className="p-2 rounded border-1"
+                type="radio"
+                name="gender"
+                className="form-check-input"
+                id="male"
+                value="male"
+                checked={gender === "male"}
+                onChange={(e) => setGender(e.target.value)}
+                required
               />
-            </div>
-            <div className="res-country-input d-flex flex-column">
-              <label htmlFor="res-country" className="form-label">
-                Residence country *
+              <label htmlFor="male" className="user-select-none">
+                Male
               </label>
-              <select
-                id="res-country"
-                name="res-country"
-                className="p-2 rounded border-1"
+
+              <input
+                type="radio"
+                name="gender"
+                className="form-check-input"
+                id="female"
+                value="female"
+                checked={gender === "female"}
+                onChange={(e) => setGender(e.target.value)}
                 required
-              >
-                <option value="" selected disabled></option>
-                <option value="">Egypt</option>
-                <option value="">UAE</option>
-                <option value="">Saudi Arabia</option>
-                <option value="">Kuwait</option>
-                <option value="">Qatar</option>
-                <option value="">Bahrain</option>
-                <option value="">Morocco</option>
-                <option value="">Tunisia</option>
-                <option value="">Algeria</option>
-                <option value="">Libya</option>
-                <option value="">Sudan</option>
-                <option value="">Jordan</option>
-                <option value="">Lebanon</option>
-                <option value="">Oman</option>
-                <option value="">Iraq</option>
-                <option value="">Palestine</option>
-              </select>
-            </div>
-            <div className="nationality d-flex flex-column">
-              <label htmlFor="na" className="form-label">
-                Nationality *
+              />
+              <label htmlFor="female" className="user-select-none">
+                Female
               </label>
-              <select
-                id="na"
-                name="na"
-                className="p-2 rounded border-1"
-                required
-              >
-                <option value="" selected disabled></option>
-                <option value="">Egypt</option>
-                <option value="">UAE</option>
-                <option value="">Saudi Arabia</option>
-                <option value="">Kuwait</option>
-                <option value="">Qatar</option>
-                <option value="">Bahrain</option>
-                <option value="">Morocco</option>
-                <option value="">Tunisia</option>
-                <option value="">Algeria</option>
-                <option value="">Libya</option>
-                <option value="">Sudan</option>
-                <option value="">Jordan</option>
-                <option value="">Lebanon</option>
-                <option value="">Oman</option>
-                <option value="">Iraq</option>
-                <option value="">Palestine</option>
-              </select>
-            </div>
-            <div className="gender-input">
-              <p className="form-label">Gender *</p>
-              <div className="m-or-f d-flex gap-3">
-                <input type="radio" name="gender" id="male" />
-                <label htmlFor="male" className="user-select-none">
-                  Male
-                </label>
-                <input type="radio" name="gender" id="female" />
-                <label htmlFor="female" className="user-select-none">
-                  Female
-                </label>
-              </div>
             </div>
           </div>
-          <div className="form-btns d-flex justify-content-between">
-            <button className="back-btn btn btn-outline-primary py-2 px-3">
-              Back
-            </button>
-            <button type="submit" className="btn btn-primary py-2 px-3">
-              Next
-            </button>
-          </div>
-        </form>
-      </div>
-    </>
+
+          {error && <p className="text-danger">{error}</p>}
+        </div>
+
+        {/* Buttons */}
+        <div className="form-btns d-flex justify-content-between">
+          <button
+            type="button"
+            className="back-btn btn btn-outline-primary py-2 px-3 w-25"
+            onClick={back}
+          >
+            Back
+          </button>
+          <button
+            type="submit"
+            className="ca-form-btn btn btn-primary py-2 px-3 w-25"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

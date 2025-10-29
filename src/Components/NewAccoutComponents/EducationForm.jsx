@@ -1,59 +1,52 @@
 import { useState } from "react";
-import experienceImg from "../../assets/experiencePage.jpg";
 
-function ExperienceForm({ back, next }) {
+function EducationForm({ back, createAccount }) {
   const [showModal, setShowModal] = useState(false);
-  const [experience, setExperience] = useState({
-    company: "",
-    title: "",
+  const [education, setEducation] = useState({
+    school: "",
+    degree: "",
+    field: "",
     start: "",
     end: "",
     desc: "",
   });
-  const [allExperiences, setAllExperiences] = useState([]);
+  const [allEducation, setAllEducation] = useState([]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setExperience((prev) => ({ ...prev, [id]: value }));
+    setEducation((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSaveExperience = () => {
-    if (!experience.company || !experience.title || !experience.start) {
+  const handleSaveEducation = () => {
+    if (!education.school || !education.degree || !education.start) {
       alert("Please fill in all required fields.");
       return;
     }
 
-    setAllExperiences((prev) => [...prev, experience]);
-    setExperience({
-      company: "",
-      title: "",
+    setAllEducation((prev) => [...prev, education]);
+    setEducation({
+      school: "",
+      degree: "",
+      field: "",
       start: "",
       end: "",
       desc: "",
     });
-    console.log("Saved Experiences:", [...allExperiences, experience]);
+    console.log("Saved Education:", [...allEducation, education]);
     handleCloseModal();
   };
 
   return (
     <div className="container">
       <form className="form-control p-4" onSubmit={(e) => e.preventDefault()}>
-        <h3>Experience</h3>
-        <p>Include at least one work experience.</p>
+        <h3>Education</h3>
+        <p>Add your academic background.</p>
         <hr />
 
-        <div className="img-container w-100 d-flex justify-content-center">
-          <img
-            src={experienceImg}
-            alt="experience"
-            className="img-fluid w-50"
-          />
-        </div>
-
-        <div className="exp-field d-flex flex-column flex-md-row justify-content-between gap-3 mt-3">
+        <div className="edu-field d-flex flex-column flex-md-row justify-content-between gap-3 mt-3">
           <button
             type="button"
             className="back-btn btn py-2 px-3"
@@ -62,20 +55,20 @@ function ExperienceForm({ back, next }) {
             Back
           </button>
 
-          <div className="exp-input d-flex flex-column flex-md-row gap-3">
+          <div className="edu-input d-flex flex-column flex-md-row gap-3">
             <button
               type="button"
               className="back-btn btn py-2 px-3"
               onClick={handleOpenModal}
             >
-              Add Experience
+              Add Education
             </button>
             <button
               type="button"
               className="ca-form-btn btn py-2 px-3"
-              onClick={() => next(allExperiences)}
+              onClick={() => createAccount(allEducation)}
             >
-              Next
+              Create Account
             </button>
           </div>
         </div>
@@ -91,37 +84,45 @@ function ExperienceForm({ back, next }) {
             className="modal-content bg-white p-4 rounded shadow"
             style={{ width: "90%", maxWidth: "500px" }}
           >
-            <h4 className="mb-3">Add Work Experience</h4>
+            <h4 className="mb-3">Add Education</h4>
             <form>
               <div className="d-flex flex-column gap-3">
                 <input
                   type="text"
-                  id="company"
+                  id="school"
                   className="form-control"
-                  placeholder="Company Name *"
-                  value={experience.company}
+                  placeholder="School / University *"
+                  value={education.school}
                   onChange={handleChange}
                 />
                 <input
                   type="text"
-                  id="title"
+                  id="degree"
                   className="form-control"
-                  placeholder="Job Title *"
-                  value={experience.title}
+                  placeholder="Degree *"
+                  value={education.degree}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  id="field"
+                  className="form-control"
+                  placeholder="Field of Study"
+                  value={education.field}
                   onChange={handleChange}
                 />
                 <input
                   type="month"
                   id="start"
                   className="form-control"
-                  value={experience.start}
+                  value={education.start}
                   onChange={handleChange}
                 />
                 <input
                   type="month"
                   id="end"
                   className="form-control"
-                  value={experience.end}
+                  value={education.end}
                   onChange={handleChange}
                 />
                 <textarea
@@ -129,12 +130,12 @@ function ExperienceForm({ back, next }) {
                   className="form-control"
                   rows="3"
                   placeholder="Description"
-                  value={experience.desc}
+                  value={education.desc}
                   onChange={handleChange}
                 />
               </div>
 
-              <div className="exp-field d-flex justify-content-end gap-3 mt-4">
+              <div className="d-flex justify-content-end gap-3 mt-4">
                 <button
                   type="button"
                   className="back-btn btn"
@@ -145,7 +146,7 @@ function ExperienceForm({ back, next }) {
                 <button
                   type="button"
                   className="ca-form-btn btn"
-                  onClick={handleSaveExperience}
+                  onClick={handleSaveEducation}
                 >
                   Save
                 </button>
@@ -158,4 +159,4 @@ function ExperienceForm({ back, next }) {
   );
 }
 
-export default ExperienceForm;
+export default EducationForm;
