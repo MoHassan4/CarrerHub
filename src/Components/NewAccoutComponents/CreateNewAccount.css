@@ -1,26 +1,26 @@
-button:not(.navbar-toggler) {
+.ca-form-btn {
     background-color: var(--primary-color) !important;
     color: #fff !important;
     border: none !important;
     transition: 0.3s;
 }
 
-button:not(.navbar-toggler):hover {
+.ca-form-btn:hover {
     background-color: orangered !important;
 }
 
-input:focus, select:focus {
+input:not(input[type="radio"]):focus, select:focus {
     border: 1px solid var(--primary-color) !important;
     outline: 1px solid var(--primary-color) !important;
 }
 
-.form-btns .back-btn, .exp-field .back-btn {
+.back-btn {
     background-color: #fff !important;
     color: var(--primary-color) !important;
     border: 1px solid var(--primary-color) !important;
 }
 
-.form-btns .back-btn:hover, .exp-field .back-btn:hover {
+.back-btn:hover {
     background-color: var(--primary-color) !important;
     color: #fff !important;
     border: 1px solid var(--primary-color) !important;
@@ -28,6 +28,9 @@ input:focus, select:focus {
 
 @media screen and (max-width: 576px) {
     .img-container img {
+        width: 100% !important;
+    }
+    .ca-form-btn, .back-btn {
         width: 100% !important;
     }
 }

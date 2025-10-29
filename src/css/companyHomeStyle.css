@@ -1,0 +1,9 @@
+:root {
+  --primary-color: #ff5722;
+}
+
+
+
+.hero .careerHub-p{
+    color: var(--primary-color);
+}

@@ -228,12 +228,12 @@ const Signup = () => {
                       </div>
                     )}
                   </div>
-                    <button
-                      type="submit"
-                      className="btn btn-lg w-100 signup-button"
-                    >
-                      Create my account
-                    </button>
+                  <button
+                    type="submit"
+                    className="btn btn-lg w-100 signup-button"
+                  >
+                    Create my account
+                  </button>
                 </form>
               </div>
             </div>

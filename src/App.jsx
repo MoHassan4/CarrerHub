@@ -8,6 +8,13 @@ import JopSearch from "./Pages/JopSearch.jsx";
 import JobsByLocation from "./Pages/JobsByLocation.jsx";
 import PageNotFound from "./Components/pageNotFound/PageNotFound.jsx";
 
+
+
+import CompanyHome from "./Pages_Company/CompanyHome.jsx";
+import PostJob from "./Pages_Company/PostJob.jsx";
+import CompanyDashboard from "./Pages_Company/CompanyDashboard.jsx";
+
+
 import "./css/cssShared/NavBar.css";
 import "./css/cssShared/Footer.css";
 import "./App.css";
@@ -29,6 +36,11 @@ function App() {
         <Route path="/jopSearch" element={<JopSearch />}></Route>
         <Route path="/jobs-by-location" element={<JobsByLocation />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+
+        <Route path="/company-home" element={<CompanyHome />}></Route>
+        <Route path="/company-post-job" element={<PostJob />}></Route>
+        <Route path="/company-dashboard" element={<CompanyDashboard />}></Route>
+
         <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
       <Footer />
