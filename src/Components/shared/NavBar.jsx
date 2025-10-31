@@ -4,21 +4,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 
+
 function NavBar() {
   const [user, setUser] = useState(null);
   const [isCompanyView, setIsCompanyView] = useState(false);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
+    const companyMode = localStorage.getItem("isCompanyView") === "true";
+
     setUser(storedUser);
+    setIsCompanyView(companyMode);
   }, []);
 
   const handleCompanyClick = () => {
     setIsCompanyView(true);
+    localStorage.setItem("isCompanyView", "true");
   };
 
   const handleHomeClick = () => {
     setIsCompanyView(false);
+    localStorage.setItem("isCompanyView", "false");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isCompanyView");
+    window.location.reload();
   };
 
   return (
@@ -26,8 +39,8 @@ function NavBar() {
       <div className="container-fluid">
         <Link
           className="navbar-brand fs-3 fw-bold pe-2"
-          to="/"
-          onClick={handleHomeClick}
+          to={isCompanyView ? "/company-home" : "/"}
+          onClick={isCompanyView ? handleCompanyClick : handleHomeClick}
         >
           CareerHub
         </Link>
@@ -48,7 +61,6 @@ function NavBar() {
           className="collapse navbar-collapse text-center justify-content-between flex-column flex-lg-row"
           id="navbarNavDropdown"
         >
-          {/* ✅ Conditional Nav Links */}
           <ul className="navbar-nav gap-3">
             {isCompanyView ? (
               <>
@@ -149,7 +161,6 @@ function NavBar() {
             )}
           </ul>
 
-          {/* ✅ Right-side buttons (Login/Profile) */}
           <div className="li-su-btns d-flex flex-column flex-lg-row gap-3 justify-content-center">
             {user ? (
               <div className="d-flex flex-row align-items-center justify-content-center gap-2 my-3 my-lg-0">
@@ -168,10 +179,7 @@ function NavBar() {
                 </span>
                 <button
                   className="btn btn-outline-danger btn-sm"
-                  onClick={() => {
-                    localStorage.removeItem("user");
-                    window.location.reload();
-                  }}
+                  onClick={handleLogout}
                 >
                   Logout
                 </button>
@@ -180,13 +188,13 @@ function NavBar() {
               <>
                 <Link
                   className="li-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
-                  to="/login"
+                  to="/prev-login"
                 >
                   Login
                 </Link>
                 <Link
                   className="su-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
-                  to="/signup"
+                  to="/prev-signup"
                 >
                   Sign Up
                 </Link>
