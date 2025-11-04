@@ -14,7 +14,6 @@ function PostJob() {
       </div>
 
       <Form>
-        {/* Job Location */}
         <Form.Group className="mb-3">
           <Form.Label>Job Location</Form.Label>
           <Form.Select>
@@ -25,13 +24,11 @@ function PostJob() {
           </Form.Select>
         </Form.Group>
 
-        {/* Job Title */}
         <Form.Group className="mb-3">
           <Form.Label>Job Title</Form.Label>
           <Form.Control type="text" placeholder="Enter job title" />
         </Form.Group>
 
-        {/* Job Description */}
         <Form.Group className="mb-3">
           <Form.Label>Job Description</Form.Label>
           <Form.Control
@@ -41,7 +38,6 @@ function PostJob() {
           />
         </Form.Group>
 
-        {/* Job Type */}
         <Form.Group className="mb-3">
           <Form.Label>Job Type</Form.Label>
           <Form.Select>
@@ -57,7 +53,6 @@ function PostJob() {
 
         <hr className="my-4" />
 
-        {/* Pay Section */}
         <div className="pay-section mb-4">
           <h5 className="fw-bold mb-3">Pay</h5>
           <p className="text-muted">
@@ -89,7 +84,6 @@ function PostJob() {
           </Form.Group>
         </div>
 
-        {/* Submit Button */}
         <div className="text-center mt-5">
           <Button variant="primary" type="submit" className="px-4">
             Submit

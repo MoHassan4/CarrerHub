@@ -33,7 +33,6 @@ function PersonalDetails({ next, back }) {
             className="w-25 rounded-circle align-self-center"
           />
 
-          {/* Birth Date */}
           <div className="bd-inputs d-flex flex-column">
             <label htmlFor="bd" className="form-label">
               Birth date *
@@ -48,7 +47,6 @@ function PersonalDetails({ next, back }) {
             />
           </div>
 
-          {/* Residence Country */}
           <div className="res-country-input d-flex flex-column">
             <label htmlFor="res-country" className="form-label">
               Residence country *
@@ -82,7 +80,6 @@ function PersonalDetails({ next, back }) {
             </select>
           </div>
 
-          {/* Nationality */}
           <div className="nationality d-flex flex-column">
             <label htmlFor="na" className="form-label">
               Nationality *
@@ -116,7 +113,6 @@ function PersonalDetails({ next, back }) {
             </select>
           </div>
 
-          {/* Gender */}
           <div className="gender-input">
             <p className="form-label">Gender *</p>
             <div className="m-or-f d-flex gap-3">
@@ -153,7 +149,6 @@ function PersonalDetails({ next, back }) {
           {error && <p className="text-danger">{error}</p>}
         </div>
 
-        {/* Buttons */}
         <div className="form-btns d-flex justify-content-between">
           <button
             type="button"

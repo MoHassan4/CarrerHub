@@ -1,18 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+// import { faGear } from "@fortawesome/free-solid-svg-icons";
 import "../css/ProfileStyle.css";
+import ExperienceProfile from "../Components/Profile/ExperienceProfile";
+import EducationProfile from "../Components/Profile/EducationProfile";
+import { useState } from "react";
+import ProfileModal from "../Components/Profile/ProfileModal";
 
 function Profile() {
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+
+  const handleShow = (type) => {
+    setModalType(type);
+    setShowModal(true);
+  };
+
+  const handleSave = (data) => {
+    console.log("Saved data:", data);
+  };
+
+  const handleClose = () => setShowModal(false);
+
   return (
     <div className="profile container">
       <div className="">
         <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-center align-items-center bg-light">
-          <FontAwesomeIcon
-            icon={faGear}
-            size="2x"
-            className="text-warning align-self-end mt-2"
-          />
+          <p className="text-warning align-self-start mt-1 fs-5 fw-bold">
+            Edit
+          </p>
           <FontAwesomeIcon
             icon={faUserCircle}
             size="4x"
@@ -23,6 +39,7 @@ function Profile() {
         </div>
 
         <div className="row pt-5 gap-5 gap-lg-0 justify-content-center">
+          {/* Basic Info Section */}
           <div className="basic-infos col-12 col-md-6 col-lg-4 text-center">
             <h5 className="mb-3">Your Informations</h5>
             <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-between">
@@ -38,36 +55,52 @@ function Profile() {
             </div>
           </div>
 
+          {/* Experience Section */}
           <div className="experience col-12 col-md-6 col-lg-4 text-center">
             <h5 className="mb-3">Experience</h5>
             <div className="p-3 rounded shadow-lg bg-light d-flex flex-column gap-3">
-              <div className="experience-item text-start border-start border-4 border-warning ps-3">
-                <h6 className="fw-bold mb-1">Frontend Developer</h6>
-                <p className="mb-1 text-secondary">Freelance — 2023–Present</p>
-                <small className="text-muted">
-                  Building responsive websites using React.js and Bootstrap.
-                </small>
-              </div>
-
-              <div className="experience-item text-start border-start border-4 border-warning ps-3">
-                <h6 className="fw-bold mb-1">Web Developer Intern</h6>
-                <p className="mb-1 text-secondary">Depi Program — 2024</p>
-                <small className="text-muted">
-                  Worked on full-stack projects using Node.js and Express.
-                </small>
-              </div>
+              <ExperienceProfile
+                title="Frontend Developer"
+                present="Freelance — 2023–Present"
+                details="Building responsive websites using React.js and Bootstrap."
+              />
+              <ExperienceProfile
+                title="Web Developer Intern"
+                present="Depi Program — 2024"
+                details="Worked on full-stack projects using Node.js and Express."
+              />
+              <hr />
+              <button
+                className="btn btn-warning fw-bold"
+                onClick={() => handleShow("experience")}
+              >
+                Add Experience
+              </button>
             </div>
           </div>
 
+          {/* Education Section */}
           <div className="education col-12 col-md-6 col-lg-4 text-center">
             <h5 className="mb-3">Education</h5>
             <div className="py-2 px-3 rounded shadow-lg d-flex flex-column justify-content-center bg-light mb-4">
-              <div className="education-item text-start border-start border-4 border-warning ps-3">
-                <h6 className="fw-bold mb-1">Bachelor's in Computer Science</h6>
-                <p className="mb-1 text-secondary">EGYPT - O6U</p>
-                <small className="text-muted">2016 - 2020</small>
-              </div>
+              <EducationProfile
+                degree="Bachelor's in Computer Science"
+                university="EGYPT - O6U"
+                duration="2016 - 2020"
+              />
+              <hr />
+              <button
+                className="btn btn-warning fw-bold"
+                onClick={() => handleShow("education")}
+              >
+                Add Education
+              </button>{" "}
             </div>
+            <ProfileModal
+              show={showModal}
+              handleClose={handleClose}
+              type={modalType}
+            />
 
             <h5 className="mb-3">Status</h5>
             <div className="py-3 px-3 rounded shadow-lg bg-light">

@@ -7,7 +7,7 @@ function TargetJobForm({ next }) {
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevent default form reload
+    e.preventDefault(); 
 
     if (!jobLevel || !jobTitle || !jobLocation) {
       setError("Please fill in all required fields.");
@@ -15,7 +15,7 @@ function TargetJobForm({ next }) {
     }
 
     setError("");
-    next(); // proceed to next step
+    next(); 
   };
 
   return (
