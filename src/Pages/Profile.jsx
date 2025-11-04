@@ -16,10 +16,6 @@ function Profile() {
     setShowModal(true);
   };
 
-  const handleSave = (data) => {
-    console.log("Saved data:", data);
-  };
-
   const handleClose = () => setShowModal(false);
 
   return (
