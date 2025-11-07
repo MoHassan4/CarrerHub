@@ -6,8 +6,8 @@ import ExperienceProfile from "../Components/Profile/ExperienceProfile";
 import EducationProfile from "../Components/Profile/EducationProfile";
 import { useState } from "react";
 import ProfileModal from "../Components/Profile/ProfileModal";
-import SkillsProfile from "../Components/Profile/SkillsProfile.jsx";
-import SkillsProfileModal from "../Components/Profile/SkillsProfileModal.jsx";
+import SkillsProfile from "../Components/Profile/SkillsProfile";
+import SkillsProfileModal from "../Components/Profile/SkillsProfileModal";
 import BasicInfosProfileModal from "../Components/Profile/BasicInfosProfileModal";
 
 function Profile() {
