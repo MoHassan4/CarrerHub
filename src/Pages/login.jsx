@@ -57,7 +57,7 @@ const Login = () => {
                 </h1>
                 <p className="text-center text-muted mb-4">
                   Don't have an account yet?{" "}
-                  <Link to="/signup" className="login-link">
+                  <Link to="/prev-signup" className="login-link">
                     Register here
                   </Link>
                 </p>

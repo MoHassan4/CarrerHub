@@ -6,25 +6,41 @@ import ExperienceProfile from "../Components/Profile/ExperienceProfile";
 import EducationProfile from "../Components/Profile/EducationProfile";
 import { useState } from "react";
 import ProfileModal from "../Components/Profile/ProfileModal";
+import SkillsProfile from "../Components/Profile/SkillsProfile.jsx";
+import SkillsProfileModal from "../Components/Profile/SkillsProfileModal.jsx";
+import BasicInfosProfileModal from "../Components/Profile/BasicInfosProfileModal";
 
 function Profile() {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
-
   const handleShow = (type) => {
     setModalType(type);
     setShowModal(true);
   };
-
   const handleClose = () => setShowModal(false);
+
+  const [showSkillModal, setShowSkillModal] = useState(false);
+  const handleSkillShow = () => {
+    setShowSkillModal(true);
+  };
+  const handleSkillModalClose = () => setShowSkillModal(false);
+
+  const [showBasicInfosModal, setShowBasicInfosModal] = useState(false);
+  const handleBasicInfos = () => {
+    setShowBasicInfosModal(true);
+  };
+  const handleBasicInfosClose = () => setShowBasicInfosModal(false);
 
   return (
     <div className="profile container">
       <div className="">
         <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-center align-items-center bg-light">
-          <p className="text-warning align-self-start mt-1 fs-5 fw-bold">
+          <button
+            onClick={handleBasicInfos}
+            className="text-warning align-self-start mt-1 fs-5 fw-bold border-0 bg-transparent"
+          >
             Edit
-          </p>
+          </button>
           <FontAwesomeIcon
             icon={faUserCircle}
             size="4x"
@@ -92,23 +108,38 @@ function Profile() {
                 Add Education
               </button>{" "}
             </div>
-            <ProfileModal
-              show={showModal}
-              handleClose={handleClose}
-              type={modalType}
-            />
+          </div>
 
-            <h5 className="mb-3">Status</h5>
-            <div className="py-3 px-3 rounded shadow-lg bg-light">
-              <p className="fw-bold mb-1">Current Status:</p>
-              <p className="text-warning mb-2">
-                Actively Looking for Opportunities
-              </p>
-              <small className="text-muted">
-                Open to frontend and full-stack web development roles.
-              </small>
+          <div className="skills col-12 col-md-6 col-lg-4 text-center my-3">
+            <h5 className="mb-3">Skills</h5>
+            <div className="p-3 rounded shadow-lg bg-light mb-3">
+              <SkillsProfile skill="HTMl" />
+              <SkillsProfile skill="React" />
+              <hr />
+              <button
+                className="btn btn-warning fw-bold w-100"
+                onClick={handleSkillShow}
+              >
+                Add Skill
+              </button>
             </div>
           </div>
+
+          <ProfileModal
+            show={showModal}
+            handleClose={handleClose}
+            type={modalType}
+          />
+
+          <SkillsProfileModal
+            show={showSkillModal}
+            handleClose={handleSkillModalClose}
+          />
+
+          <BasicInfosProfileModal
+            show={showBasicInfosModal}
+            handleClose={handleBasicInfosClose}
+          />
         </div>
       </div>
     </div>

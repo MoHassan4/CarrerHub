@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-
-
 
 function NavBar() {
   const [user, setUser] = useState(null);
   const [isCompanyView, setIsCompanyView] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -31,6 +29,7 @@ function NavBar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("isCompanyView");
+    navigate("/");
     window.location.reload();
   };
 
@@ -188,7 +187,7 @@ function NavBar() {
               <>
                 <Link
                   className="li-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"
-                  to="/prev-login"
+                  to="/login"
                 >
                   Login
                 </Link>
