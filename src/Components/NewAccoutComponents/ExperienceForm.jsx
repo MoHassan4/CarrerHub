@@ -1,48 +1,48 @@
 import { useState } from "react";
 import experienceImg from "../../assets/experiencePage.jpg";
+import { setExperienceDB } from "../../services/Users.Login_SignUp.service";
 
-function ExperienceForm({ back, next }) {
-  const [showModal, setShowModal] = useState(false);
+function ExperienceForm({ back, next, userID }) {
   const [experience, setExperience] = useState({
-    company: "",
-    title: "",
-    start: "",
-    end: "",
-    desc: "",
+    userId: userID,
+    jobTitle: "",
+    companyName: "",
+    jobLocation: "",
+    startDate: "",
+    endDate: "",
+    description: "",
   });
-  const [allExperiences, setAllExperiences] = useState([]);
-
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setExperience((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSaveExperience = () => {
-    if (!experience.company || !experience.title || !experience.start) {
-      alert("Please fill in all required fields.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { jobTitle, companyName, jobLocation, startDate } = experience;
+
+    if (!jobTitle || !companyName || !jobLocation || !startDate) {
+      setError("Please fill in all required fields.");
       return;
     }
 
-    setAllExperiences((prev) => [...prev, experience]);
-    setExperience({
-      company: "",
-      title: "",
-      start: "",
-      end: "",
-      desc: "",
-    });
-    console.log("Saved Experiences:", [...allExperiences, experience]);
-    handleCloseModal();
+    try {
+      setError(""); 
+      await setExperienceDB(experience); 
+      next(experience); 
+    } catch (err) {
+      console.error(err);
+      setError("Failed to save experience. Please try again.");
+    }
   };
 
   return (
     <div className="container">
-      <form className="form-control p-4" onSubmit={(e) => e.preventDefault()}>
+      <form className="form-control p-4" onSubmit={handleSubmit}>
         <h3>Experience</h3>
-        <p>Include at least one work experience.</p>
+        <p>Provide your work experience.</p>
         <hr />
 
         <div className="img-container w-100 d-flex justify-content-center">
@@ -53,107 +53,65 @@ function ExperienceForm({ back, next }) {
           />
         </div>
 
-        <div className="exp-field d-flex flex-column flex-md-row justify-content-between gap-3 mt-3">
-          <button
-            type="button"
-            className="back-btn btn py-2 px-3"
-            onClick={back}
-          >
+        <div className="d-flex flex-column gap-3 mt-3">
+          <input
+            type="text"
+            id="jobTitle"
+            className="form-control"
+            placeholder="Job Title *"
+            value={experience.jobTitle}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            id="companyName"
+            className="form-control"
+            placeholder="Company Name *"
+            value={experience.companyName}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            id="jobLocation"
+            className="form-control"
+            placeholder="Job Location *"
+            value={experience.jobLocation}
+            onChange={handleChange}
+          />
+          <input
+            type="month"
+            id="startDate"
+            className="form-control"
+            value={experience.startDate}
+            onChange={handleChange}
+          />
+          <input
+            type="month"
+            id="endDate"
+            className="form-control"
+            value={experience.endDate}
+            onChange={handleChange}
+          />
+          <textarea
+            id="description"
+            className="form-control"
+            rows="3"
+            placeholder="Description"
+            value={experience.description}
+            onChange={handleChange}
+          />
+          {error && <p className="text-danger fw-medium">{error}</p>}
+        </div>
+
+        <div className="d-flex justify-content-between mt-4">
+          <button type="button" className="back-btn btn" onClick={back}>
             Back
           </button>
-
-          <div className="exp-input d-flex flex-column flex-md-row gap-3">
-            <button
-              type="button"
-              className="back-btn btn py-2 px-3"
-              onClick={handleOpenModal}
-            >
-              Add Experience
-            </button>
-            <button
-              type="button"
-              className="ca-form-btn btn py-2 px-3"
-              onClick={() => next(allExperiences)}
-            >
-              Next
-            </button>
-          </div>
+          <button type="submit" className="ca-form-btn btn">
+            Next
+          </button>
         </div>
       </form>
-
-      {/* Modal */}
-      {showModal && (
-        <div
-          className="modal-overlay position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
-          style={{ backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1000 }}
-        >
-          <div
-            className="modal-content bg-white p-4 rounded shadow"
-            style={{ width: "90%", maxWidth: "500px" }}
-          >
-            <h4 className="mb-3">Add Work Experience</h4>
-            <form>
-              <div className="d-flex flex-column gap-3">
-                <input
-                  type="text"
-                  id="company"
-                  className="form-control"
-                  placeholder="Company Name *"
-                  value={experience.company}
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  id="title"
-                  className="form-control"
-                  placeholder="Job Title *"
-                  value={experience.title}
-                  onChange={handleChange}
-                />
-                <input
-                  type="month"
-                  id="start"
-                  className="form-control"
-                  value={experience.start}
-                  onChange={handleChange}
-                />
-                <input
-                  type="month"
-                  id="end"
-                  className="form-control"
-                  value={experience.end}
-                  onChange={handleChange}
-                />
-                <textarea
-                  id="desc"
-                  className="form-control"
-                  rows="3"
-                  placeholder="Description"
-                  value={experience.desc}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="exp-field d-flex justify-content-end gap-3 mt-4">
-                <button
-                  type="button"
-                  className="back-btn btn"
-                  onClick={handleCloseModal}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="ca-form-btn btn"
-                  onClick={handleSaveExperience}
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

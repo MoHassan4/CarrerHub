@@ -2,6 +2,8 @@ import "../css/signup.css";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { setCompaniesData } from "../services/Company.SignUp.service";
+import Swal from "sweetalert2";
 
 const CompanySignup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,10 +16,37 @@ const CompanySignup = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Company Signup Data:", data);
-    reset();
-    navigate("/company-info-form");
+  const onSubmit = async (data) => {
+    const response = await setCompaniesData(data);
+    const resData = response.data;
+
+    if (resData.status) {
+      localStorage.setItem(
+        "company",
+        JSON.stringify({
+          token: resData.token,
+          role: resData.role,
+        })
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "Signup Successful 🎉",
+        text: "Your company account has been created!",
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        reset();
+        navigate("/company-home");
+      });
+    } else {
+      // Error alert
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: resData.message || "Failed to create company account",
+      });
+    }
   };
 
   return (
@@ -45,15 +74,15 @@ const CompanySignup = () => {
                         type="text"
                         placeholder="Enter company name"
                         className={`form-control ${
-                          errors.firstName ? "is-invalid" : ""
+                          errors.companyName ? "is-invalid" : ""
                         }`}
-                        {...register("firstName", {
+                        {...register("companyName", {
                           required: "Company name is required",
                         })}
                       />
-                      {errors.firstName && (
+                      {errors.companyName && (
                         <div className="invalid-feedback">
-                          {errors.firstName.message}
+                          {errors.companyName.message}
                         </div>
                       )}
                     </div>
@@ -66,15 +95,15 @@ const CompanySignup = () => {
                         type="text"
                         placeholder="Enter representative name"
                         className={`form-control ${
-                          errors.lastName ? "is-invalid" : ""
+                          errors.companyRepresentative ? "is-invalid" : ""
                         }`}
-                        {...register("lastName", {
+                        {...register("companyRepresentative", {
                           required: "Representative name is required",
                         })}
                       />
-                      {errors.lastName && (
+                      {errors.companyRepresentative && (
                         <div className="invalid-feedback">
-                          {errors.lastName.message}
+                          {errors.companyRepresentative.message}
                         </div>
                       )}
                     </div>
@@ -159,9 +188,9 @@ const CompanySignup = () => {
                         type="tel"
                         placeholder="XXX-XXXXXXX"
                         className={`form-control ${
-                          errors.mobileNumber ? "is-invalid" : ""
+                          errors.phoneNumber ? "is-invalid" : ""
                         }`}
-                        {...register("mobileNumber", {
+                        {...register("phoneNumber", {
                           required: "Mobile number is required",
                           pattern: {
                             value: /^[0-9]{7,15}$/,
@@ -170,9 +199,9 @@ const CompanySignup = () => {
                         })}
                       />
                     </div>
-                    {errors.mobileNumber && (
+                    {errors.phoneNumber && (
                       <div className="invalid-feedback d-block">
-                        {errors.mobileNumber.message}
+                        {errors.phoneNumber.message}
                       </div>
                     )}
                   </div>

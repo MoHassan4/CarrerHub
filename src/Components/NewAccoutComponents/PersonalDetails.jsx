@@ -1,21 +1,33 @@
 import { useState } from "react";
+import { setStep2 } from "../../services/Users.Login_SignUp.service";
 
-function PersonalDetails({ next, back }) {
+function PersonalDetails({ next, back, userID }) {
   const [birthDate, setBirthDate] = useState("");
   const [resCountry, setResCountry] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!birthDate || !resCountry || !nationality || !gender) {
       setError("Please fill in all required fields.");
       return;
     }
-
     setError("");
+
+    const data = {
+      userId: userID,
+      birthDate,
+      country: resCountry,
+      nationality,
+      gender,
+    };
+
+    // Send to API
+    await setStep2(data);
+
     next();
   };
 
@@ -30,7 +42,8 @@ function PersonalDetails({ next, back }) {
           <img
             src="https://simplyilm.com/wp-content/uploads/2017/08/temporary-profile-placeholder-1.jpg"
             alt="profile pic"
-            className="w-25 rounded-circle align-self-center"
+            className="rounded-circle align-self-center"
+            style={{ width: "120px" }}
           />
 
           <div className="bd-inputs d-flex flex-column">

@@ -15,32 +15,48 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const response = await getUsersData();
-    const users = response.data;
+    const response = await getUsersData(data);
+    const resData = response.data;
 
-    const foundUser = users.find((u) => {
-      return u.email === data.email && u.password === data.password;
-    });
+    if (resData.status) {
+      if (resData.role === "company") {
+        localStorage.setItem(
+          "company",
+          JSON.stringify({
+            token: resData.token,
+            role: resData.role,
+          })
+        );
+      } else if (resData.role === "user") {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            token: resData.token,
+            role: resData.role,
+          })
+        );
+      }
 
-    if (foundUser) {
-      localStorage.setItem("user", JSON.stringify(foundUser));
       Swal.fire({
         icon: "success",
         title: "Login Successful 🎉",
-        text: `Welcome back, ${foundUser.firstName}!`,
+        text: `Welcome back, ${resData.role}!`,
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
-        navigate("/");
+        if (resData.role === "company") {
+          navigate("/company-home");
+        } else {
+          navigate("/");
+        }
+
         window.location.reload();
       });
     } else {
       Swal.fire({
         icon: "error",
         title: "Oops!",
-        html: `
-          Invalid Email or Password
-        `,
+        html: resData.message || "Invalid Email or Password",
       });
     }
   };

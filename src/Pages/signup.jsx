@@ -1,17 +1,12 @@
 import "../css/signup.css";
-import {
-  getUsersData,
-  setUserData,
-} from "../services/Users.Login_SignUp.service";
-
+import { setUserData } from "../services/Users.Login_SignUp.service";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 import Swal from "sweetalert2";
 import CreateNewAccount from "./CreateNewAccount";
 
-const Signup = () => {
+function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -21,58 +16,40 @@ const Signup = () => {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  async function onSubmit(data) {
+    // Prepare phone Number
     const fullData = {
       ...data,
-      mobileNumber: `${data.countryCode}${data.mobileNumber}`,
+      phoneNumber: `${data.countryCode}${data.phoneNumber}`,
     };
 
-    const usersRes = await getUsersData();
-    const users = usersRes.data;
+    const response = await setUserData(fullData);
+    const resData = response.data;
 
-    const emailExists = users.some((user) => user.email === fullData.email);
-    const phoneExists = users.some(
-      (user) => user.mobileNumber === fullData.mobileNumber
-    );
-
-    if (emailExists || phoneExists) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops!",
-        html: `
-    Email already used!<br/>
-    Or mobile number already used!
-  `,
-      });
-      return;
-    }
-
-    await setUserData(fullData).then(() => {
+    if (resData.status) {
       Swal.fire({
         icon: "success",
-        title: "Title here",
-        text: "Your Account Have Been Created",
+        title: "Account Created",
+        text: "Your account has been created successfully",
       }).then(() => {
-        const safeUser = {
-          firstName: fullData.firstName,
-          lastName: fullData.lastName,
-          email: fullData.email,
-        };
-        localStorage.setItem("user", JSON.stringify(safeUser));
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ token: resData.token, role: resData.role })
+        );
+
         reset();
         navigate("/create-new-account");
         window.location.reload();
       });
-    });
-  };
-
-  const [, SetUserData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    mobileNumber: "",
-  });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Signup Failed",
+        text: resData.message || "Something went wrong!",
+      });
+    }
+  }
 
   return (
     <div className="signup-container d-flex align-items-center justify-content-center min-vh-100 w-100">
@@ -193,7 +170,7 @@ const Signup = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Mobile number *</label>
+                    <label className="form-label">Phone Number *</label>
                     <div className="input-group">
                       <select
                         className="form-select signup-country-select"
@@ -211,23 +188,24 @@ const Signup = () => {
                         type="tel"
                         placeholder="XXX-XXXXXXX"
                         className={`form-control ${
-                          errors.mobileNumber ? "is-invalid" : ""
+                          errors.phoneNumber ? "is-invalid" : ""
                         }`}
-                        {...register("mobileNumber", {
-                          required: "Mobile number is required",
+                        {...register("phoneNumber", {
+                          required: "Phone Number is required",
                           pattern: {
                             value: /^[0-9]{7,15}$/,
-                            message: "Invalid mobile number",
+                            message: "Invalid phone Number",
                           },
                         })}
                       />
                     </div>
-                    {errors.mobileNumber && (
+                    {errors.phoneNumber && (
                       <div className="invalid-feedback d-block">
-                        {errors.mobileNumber.message}
+                        {errors.phoneNumber.message}
                       </div>
                     )}
                   </div>
+
                   <button
                     type="submit"
                     className="btn btn-lg w-100 signup-button"
@@ -242,6 +220,6 @@ const Signup = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Signup;

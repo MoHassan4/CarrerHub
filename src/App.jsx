@@ -4,7 +4,6 @@ import Footer from "./Components/shared/Footer.jsx";
 import Home from "./Pages/Home.jsx";
 import Login from "./Pages/login.jsx";
 import PrevSignup from "./Pages/prevSignup.jsx";
-import PrevLogin from "./Pages/PrevLoginin.jsx";
 import Signup from "./Pages/signup.jsx";
 import JopSearch from "./Pages/JopSearch.jsx";
 import JobsByLocation from "./Pages/JobsByLocation.jsx";
@@ -34,7 +33,6 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/prev-signup" element={<PrevSignup />}></Route>
-        <Route path="/prev-login" element={<PrevLogin />}></Route>
         <Route
           path="/create-new-account"
           element={<CreateNewAccount />}

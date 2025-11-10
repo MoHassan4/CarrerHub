@@ -26,6 +26,10 @@ input:not(input[type="radio"]):focus, select:focus {
     border: 1px solid var(--primary-color) !important;
 }
 
+.user-skill {
+    background-color: var(--primary-color);
+}
+
 @media screen and (max-width: 576px) {
     .img-container img {
         width: 100% !important;

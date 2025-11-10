@@ -1,34 +1,29 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 function NavBar() {
-  const [user, setUser] = useState(null);
-  const [isCompanyView, setIsCompanyView] = useState(false);
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const companyMode = localStorage.getItem("isCompanyView") === "true";
+    const companyData = JSON.parse(localStorage.getItem("company"));
+    const userData = JSON.parse(localStorage.getItem("user"));
 
-    setUser(storedUser);
-    setIsCompanyView(companyMode);
-  }, []);
-
-  const handleCompanyClick = () => {
-    setIsCompanyView(true);
-    localStorage.setItem("isCompanyView", "true");
-  };
-
-  const handleHomeClick = () => {
-    setIsCompanyView(false);
-    localStorage.setItem("isCompanyView", "false");
-  };
+    if (companyData?.role === "company") {
+      setUserRole("company");
+    } else if (userData?.role === "user") {
+      setUserRole("user");
+    } else {
+      setUserRole(null);
+    }
+  }, [location]);
 
   const handleLogout = () => {
+    localStorage.removeItem("company");
     localStorage.removeItem("user");
-    localStorage.removeItem("isCompanyView");
     navigate("/");
     window.location.reload();
   };
@@ -36,14 +31,15 @@ function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg position-fixed w-100 top-0 z-3 shadow-sm">
       <div className="container-fluid">
+        {/* ===== Brand ===== */}
         <Link
           className="navbar-brand fs-3 fw-bold pe-2"
-          to={isCompanyView ? "/company-home" : "/"}
-          onClick={isCompanyView ? handleCompanyClick : handleHomeClick}
+          to={userRole === "company" ? "/company-home" : "/"}
         >
           CareerHub
         </Link>
 
+        {/* ===== Mobile Menu Button ===== */}
         <button
           className="navbar-toggler"
           type="button"
@@ -56,12 +52,14 @@ function NavBar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
+        {/* ===== Nav Links ===== */}
         <div
           className="collapse navbar-collapse text-center justify-content-between flex-column flex-lg-row"
           id="navbarNavDropdown"
         >
           <ul className="navbar-nav gap-3">
-            {isCompanyView ? (
+            {userRole === "company" ? (
+              // ===== Company Nav Links =====
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/company-home">
@@ -79,15 +77,16 @@ function NavBar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/" onClick={handleHomeClick}>
+                  <Link className="nav-link" to="/">
                     For Job Seekers
                   </Link>
                 </li>
               </>
             ) : (
+              // ===== Normal User Nav Links =====
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/" onClick={handleHomeClick}>
+                  <Link className="nav-link" to="/">
                     Home
                   </Link>
                 </li>
@@ -148,11 +147,7 @@ function NavBar() {
                   </ul>
                 </li>
                 <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="/company-home"
-                    onClick={handleCompanyClick}
-                  >
+                  <Link className="nav-link" to="/company-home">
                     For Companies
                   </Link>
                 </li>
@@ -160,22 +155,30 @@ function NavBar() {
             )}
           </ul>
 
+          {/* ===== Right-side Buttons ===== */}
           <div className="li-su-btns d-flex flex-column flex-lg-row gap-3 justify-content-center">
-            {user ? (
+            {userRole ? (
+              // Logged-in view
               <div className="d-flex flex-row align-items-center justify-content-center gap-2 my-3 my-lg-0">
-                <Link className="profile-link" to="/profile">
-                  <FontAwesomeIcon
-                    icon={faUserCircle}
-                    size="2x"
-                    className="text-warning"
-                  />
-                </Link>
-                <span
-                  className="d-none d-lg-block fw-bold text-truncate"
-                  style={{ maxWidth: "120px" }}
-                >
-                  {user.firstName} {user.lastName}
-                </span>
+                {userRole ===
+                  "user" &&(
+                    <>
+                      <Link className="profile-link" to="/profile">
+                        <FontAwesomeIcon
+                          icon={faUserCircle}
+                          size="2x"
+                          className="text-warning"
+                        />
+                      </Link>
+                      <span
+                        className="d-none d-lg-block fw-bold text-truncate"
+                        style={{ maxWidth: "120px" }}
+                      >
+                        {userRole}
+                      </span>
+                    </>
+                  )}
+
                 <button
                   className="btn btn-outline-danger btn-sm"
                   onClick={handleLogout}
@@ -184,6 +187,8 @@ function NavBar() {
                 </button>
               </div>
             ) : (
+              // Logged-out view
+
               <>
                 <Link
                   className="li-btn text-decoration-none bg-transparent border-0 p-2 rounded-3"

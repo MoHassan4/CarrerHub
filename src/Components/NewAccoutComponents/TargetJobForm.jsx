@@ -1,21 +1,36 @@
 import { useState } from "react";
+import { setStep1 } from "../../services/Users.Login_SignUp.service";
 
-function TargetJobForm({ next }) {
+function TargetJobForm({ next, userID }) {
   const [jobLevel, setJobLevel] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [jobLocation, setJobLocation] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     if (!jobLevel || !jobTitle || !jobLocation) {
       setError("Please fill in all required fields.");
       return;
     }
 
+    console.log(userID);
+    console.log(jobLevel);
+    console.log(jobTitle);
+    console.log(jobLocation);
+
+    const formData = {
+      userId: userID,
+      targetJobLevel: jobLevel,
+      targetJobTitle: jobTitle,
+      targetJobLocation: jobLocation,
+    };
+
+    await setStep1(formData);
+
     setError("");
-    next(); 
+    next();
   };
 
   return (
