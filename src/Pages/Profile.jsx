@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 // import { faGear } from "@fortawesome/free-solid-svg-icons";
@@ -10,9 +11,10 @@ import SkillsProfile from "../Components/Profile/SkillsProfile";
 import SkillsProfileModal from "../Components/Profile/SkillsProfileModal";
 import BasicInfosProfileModal from "../Components/Profile/BasicInfosProfileModal";
 import {
-  fetchAppliedJobs,
+  // fetchAppliedJobs,
   getUsers,
 } from "../services/Users.Get_Update_Profile.service";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 function Profile() {
   const [showModal, setShowModal] = useState(false);
@@ -36,7 +38,7 @@ function Profile() {
   const handleBasicInfosClose = () => setShowBasicInfosModal(false);
 
   const [userData, setUserData] = useState(null);
-  const [appliedJobs, setAppliedJobs] = useState([]);
+  // const [appliedJobs, setAppliedJobs] = useState([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -48,25 +50,40 @@ function Profile() {
       }
     };
 
-    const getJobs = async () => {
-      const jobs = await fetchAppliedJobs();
-      setAppliedJobs(jobs);
-    };
+    // const getJobs = async () => {
+    //   const jobs = await fetchAppliedJobs();
+    //   setAppliedJobs(jobs);
+    // };
 
     fetchUser();
-    getJobs();
+    // getJobs();
   }, []);
 
   return (
     <div className="profile container">
       {/* Profile Header */}
       <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-center align-items-center bg-light mb-4">
-        <button
-          onClick={handleBasicInfos}
-          className="orange align-self-start mt-1 fs-5 fw-bold border-0 bg-transparent"
-        >
-          Edit
-        </button>
+        <div className="d-flex align-self-start w-100 justify-content-between">
+          <button
+            onClick={handleBasicInfos}
+            className="orange mt-1 fs-5 fw-bold border-0 bg-transparent"
+          >
+            Edit
+          </button>
+          <Link
+            to="/applied-jobs"
+            className="orange mt-1 fs-5 fw-bold border-0 text-decoration-none d-none d-lg-block"
+          >
+            Jobs You Applied For{" "}
+            <FontAwesomeIcon className="right-arrow" icon={faArrowRight} />
+          </Link>
+          <Link
+            to="/applied-jobs"
+            className="orange mt-1 fs-5 fw-bold border-0 text-decoration-none d-lg-none"
+          >
+            Your Jobs
+          </Link>
+        </div>
         <FontAwesomeIcon icon={faUserCircle} size="4x" className="orange" />
         <h4 className="mt-3">
           {userData?.user?.firstName} {userData?.user?.lastName}
@@ -163,7 +180,7 @@ function Profile() {
         </div>
 
         {/* Applied Jobs */}
-        <div className="card p-3 shadow-lg w-100">
+        {/* <div className="card p-3 shadow-lg w-100">
           <h5>Jobs You Applied For</h5>
           <div
             className="d-flex flex-column gap-2"
@@ -211,7 +228,7 @@ function Profile() {
               </p>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Modals */}

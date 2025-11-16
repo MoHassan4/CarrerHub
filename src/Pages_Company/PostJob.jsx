@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Header from "../Components/shared/Header";
 import setJobData from "../services/AddJobs.service";
+import Swal from "sweetalert2";
 
 function PostJob() {
   const [formData, setFormData] = useState({
@@ -72,8 +73,32 @@ function PostJob() {
         jobMaxPay: Number(formData.jobMaxPay),
       };
 
-      await setJobData(payload);
-      alert("Job Posted Successfully!");
+      
+      
+      const res = await setJobData(payload);
+      if (res.status) {
+        Swal.fire({
+          icon: "success",
+          title: "Job Posted Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setFormData({
+          jobLocation: "",
+          jobTitle: "",
+          jobDescription: "",
+          jobType: "",
+          jobMinPay: "",
+          jobMaxPay: "",
+          jobRate: "",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error Posting Job",
+          text: res.message || "Please try again later.",
+        });
+      }
     }
   }
 
@@ -97,10 +122,28 @@ function PostJob() {
             onChange={handleChange}
           >
             <option value="">Select Country</option>
+            <option value="Algeria">Algeria</option>
+            <option value="Bahrain">Bahrain</option>
+            <option value="Comoros">Comoros</option>
+            <option value="Djibouti">Djibouti</option>
             <option value="Egypt">Egypt</option>
-            <option value="Oman">Oman</option>
             <option value="Iraq">Iraq</option>
+            <option value="Jordan">Jordan</option>
+            <option value="Kuwait">Kuwait</option>
+            <option value="Lebanon">Lebanon</option>
+            <option value="Libya">Libya</option>
+            <option value="Mauritania">Mauritania</option>
+            <option value="Morocco">Morocco</option>
+            <option value="Oman">Oman</option>
+            <option value="Palestine">Palestine</option>
+            <option value="Qatar">Qatar</option>
+            <option value="Saudi Arabia">Saudi Arabia</option>
+            <option value="Somalia">Somalia</option>
+            <option value="Sudan">Sudan</option>
             <option value="Syria">Syria</option>
+            <option value="Tunisia">Tunisia</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="Yemen">Yemen</option>
           </Form.Select>
           {errors.jobLocation && (
             <p className="text-danger">{errors.jobLocation}</p>

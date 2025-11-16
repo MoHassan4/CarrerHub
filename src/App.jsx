@@ -26,6 +26,7 @@ import "./css/cssShared/Footer.css";
 import "./App.css";
 import CreateNewAccount from "./Pages/CreateNewAccount.jsx";
 import Profile from "./Pages/Profile";
+import AppliedJobs from "./Pages/AppliedJobs.jsx";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/jobs-by-location" element={<JobsByLocation />}></Route>
         <Route path="/find-jobs/:q?/:country?" element={<FindJobs />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/applied-jobs" element={<AppliedJobs />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact-us" element={<ContactUs />}></Route>
         <Route path="/faq" element={<FAQ />}></Route>
