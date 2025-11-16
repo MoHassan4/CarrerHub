@@ -22,6 +22,12 @@
     transition: 0.25s;
 }
 
+.posted-jobs:hover {
+    background-color: rgb(240, 240, 240);
+    border-radius: 0.5rem;
+    transition: 0.25s;
+}
+
 .close-btn {
     background-color: transparent !important;
     border: 1px solid var(--primary-color) !important;

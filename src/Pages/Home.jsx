@@ -51,7 +51,7 @@ function Home() {
             <Tag job={"Data Analyst"} />
           </div>
           <div className="col-6 col-md-auto">
-            <Tag job={"Project Manager"} />
+            <Tag job={"Frontend Developer"} />
           </div>
         </div>
       </div>

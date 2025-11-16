@@ -1,8 +1,27 @@
-import React from "react";
-
-import "../../css/cssShared/SearchFormStyle.css"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../../css/cssShared/SearchFormStyle.css";
 
 function SearchForm() {
+  const [query, setQuery] = useState("");
+  const [country, setCountry] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    const searchQuery = encodeURIComponent(query);
+    const searchCountry = encodeURIComponent(country);
+
+    if (query && country) {
+      navigate(`/find-jobs/${searchQuery}/${searchCountry}`);
+    } else if (query) {
+      navigate(`/find-jobs/${searchQuery}`);
+    } else if (country) {
+      navigate(`/find-jobs/${searchCountry}`);
+    } else {
+      navigate(`/find-jobs`);
+    }
+  };
+
   return (
     <div className="search-form my-5 d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2">
       <input
@@ -10,12 +29,16 @@ function SearchForm() {
         className="form-control border-1 p-3"
         placeholder="Search for jobs..."
         aria-label="Search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
 
       <select
         className="form-select border-1 border-start p-3"
-        defaultValue="Egypt"
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
       >
+        <option value="">Not Selected</option>
         <option value="Egypt">Egypt</option>
         <option value="Saudi Arabia">Saudi Arabia</option>
         <option value="United Arab Emirates">United Arab Emirates</option>
@@ -36,7 +59,9 @@ function SearchForm() {
         <option value="Palestine">Palestine</option>
       </select>
 
-      <button className="btn myBtn px-4 text-white w-50">Find Now</button>
+      <button className="btn myBtn px-4 text-white w-50" onClick={handleSearch}>
+        Find Now
+      </button>
     </div>
   );
 }

@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { getUsers } from "../../services/Users.Get_Update_Profile.service";
 
 function NavBar() {
   const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [userName, setUserName] = useState(null);
 
   useEffect(() => {
     const companyData = JSON.parse(localStorage.getItem("company"));
@@ -19,7 +21,17 @@ function NavBar() {
     } else {
       setUserRole(null);
     }
-  }, [location]);
+
+    const fetchUser = async () => {
+      const res = await getUsers();
+      const myData = res.data.user;
+      setUserName(myData);
+    };
+
+    if (userRole === "user") {
+      fetchUser();
+    }
+  }, [location, userRole]);
 
   const handleLogout = () => {
     localStorage.removeItem("company");
@@ -66,21 +78,21 @@ function NavBar() {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/company-post-job">
                     Post a Job
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/company-dashboard">
                     Company Dashboard
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/">
                     For Job Seekers
                   </Link>
-                </li>
+                </li> */}
               </>
             ) : (
               // ===== Normal User Nav Links =====
@@ -90,11 +102,11 @@ function NavBar() {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/features">
                     Features
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   <Link
                     className="nav-link dropdown-toggle"
@@ -135,7 +147,7 @@ function NavBar() {
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/faqs">
+                      <Link className="dropdown-item" to="/faq">
                         FAQs
                       </Link>
                     </li>
@@ -144,13 +156,18 @@ function NavBar() {
                         About
                       </Link>
                     </li>
+                    <li>
+                      <Link className="dropdown-item" to="/contact-us">
+                      Contact Us
+                      </Link>
+                    </li>
                   </ul>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/company-home">
                     For Companies
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
           </ul>
@@ -160,24 +177,23 @@ function NavBar() {
             {userRole ? (
               // Logged-in view
               <div className="d-flex flex-row align-items-center justify-content-center gap-2 my-3 my-lg-0">
-                {userRole ===
-                  "user" &&(
-                    <>
-                      <Link className="profile-link" to="/profile">
-                        <FontAwesomeIcon
-                          icon={faUserCircle}
-                          size="2x"
-                          className="text-warning"
-                        />
-                      </Link>
-                      <span
-                        className="d-none d-lg-block fw-bold text-truncate"
-                        style={{ maxWidth: "120px" }}
-                      >
-                        {userRole}
-                      </span>
-                    </>
-                  )}
+                {userRole === "user" && (
+                  <>
+                    <Link className="profile-link" to="/profile">
+                      <FontAwesomeIcon
+                        icon={faUserCircle}
+                        size="2x"
+                        className="orange"
+                      />
+                    </Link>
+                    <span
+                      className="d-none d-lg-block fw-bold text-truncate"
+                      style={{ maxWidth: "120px" }}
+                    >
+                      {userName?.firstName} {userName?.lastName}
+                    </span>
+                  </>
+                )}
 
                 <button
                   className="btn btn-outline-danger btn-sm"

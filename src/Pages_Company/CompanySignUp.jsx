@@ -31,13 +31,13 @@ const CompanySignup = () => {
 
       Swal.fire({
         icon: "success",
-        title: "Signup Successful 🎉",
-        text: "Your company account has been created!",
-        timer: 2000,
+        title: "Almost there!",
+        text: "Your company account has been created successfully. You’ll now be redirected to complete the last step in the Company Info Form.",
+        timer: 2500,
         showConfirmButton: false,
       }).then(() => {
         reset();
-        navigate("/company-home");
+        navigate("/company-info-form");
       });
     } else {
       // Error alert

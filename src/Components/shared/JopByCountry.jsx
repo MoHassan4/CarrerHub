@@ -1,10 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 function JopByCountry({ country, number, image }) {
+  const navigate = useNavigate();
+
   return (
-    <a
-      href="#"
+    <div
+      onClick={() => navigate(`/find-jobs/${country}`)}
       style={{
         display: "block",
         textDecoration: "none",
+        cursor: "pointer",
       }}
       className="job-country-card"
     >
@@ -51,7 +56,7 @@ function JopByCountry({ country, number, image }) {
           </p>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 

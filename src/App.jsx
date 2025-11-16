@@ -9,6 +9,9 @@ import JopSearch from "./Pages/JopSearch.jsx";
 import JobsByLocation from "./Pages/JobsByLocation.jsx";
 import FindJobs from "./Pages/FindJobs.jsx";
 import PageNotFound from "./Components/pageNotFound/PageNotFound.jsx";
+import About from "./Pages/About.jsx";
+import ContactUs from "./Pages/ContactUs.jsx";
+import FAQ from "./Pages/faq.jsx";
 
 import CompanyHome from "./Pages_Company/CompanyHome.jsx";
 import PostJob from "./Pages_Company/PostJob.jsx";
@@ -39,9 +42,12 @@ function App() {
         ></Route>
         <Route path="/jopSearch" element={<JopSearch />}></Route>
         <Route path="/jobs-by-location" element={<JobsByLocation />}></Route>
-        <Route path="/find-jobs" element={<FindJobs />}></Route>
+        <Route path="/find-jobs/:q?/:country?" element={<FindJobs />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
-
+        <Route path="/about" element={<About />}></Route>
+        <Route path="/contact-us" element={<ContactUs />}></Route>
+        <Route path="/faq" element={<FAQ />}></Route>
+        {/* company routes */}
         <Route path="/company-home" element={<CompanyHome />}></Route>
         <Route path="/company-post-job" element={<PostJob />}></Route>
         <Route path="/company-dashboard" element={<CompanyDashboard />}></Route>
@@ -52,7 +58,6 @@ function App() {
         <Route path="/company-signup" element={<CompanySignup />}></Route>
         <Route path="/company-info-form" element={<CompanyInfoForm />}></Route>
         <Route path="/company-login" element={<CompanyLogin />}></Route>
-
         <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
       <Footer />

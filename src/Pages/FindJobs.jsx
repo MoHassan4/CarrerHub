@@ -1,132 +1,129 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import SearchForm from "../Components/shared/SearchForm";
 import Header from "../Components/shared/Header";
+import axios from "axios";
+import Swal from "sweetalert2";
 import "../css/FindJobs.css";
 
 function FindJobs() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [jobs, setJobs] = useState([]);
 
-  const jobs = [
-    {
-      id: 1,
-      title: "Frontend Developer",
-      company: "TechCorp",
-      location: "Giza, Egypt",
-      type: "Full-time",
-      skills: ["HTML", "CSS", "JavaScript", "React", "Redux"],
-      posted: "3 hours ago",
-      description:
-        "We are looking for a talented Frontend Developer to join our dynamic team. You'll work on modern web applications using React and Redux.",
-    },
-    {
-      id: 2,
-      title: "Backend Developer",
-      company: "CodeBase",
-      location: "Cairo, Egypt",
-      type: "Remote",
-      skills: ["Node.js", "Express", "MongoDB", "Docker"],
-      posted: "1 day ago",
-      description:
-        "Join our backend team to build scalable APIs and microservices using Node.js and Express. Experience with databases and Docker is a plus.",
-    },
-    {
-      id: 3,
-      title: "UI/UX Designer",
-      company: "PixelPerfect",
-      location: "Alexandria, Egypt",
-      type: "Full-time",
-      skills: ["Figma", "Adobe XD", "UI Design", "Prototyping"],
-      posted: "2 days ago",
-      description:
-        "Looking for a creative designer to craft intuitive interfaces and engaging user experiences for our web and mobile products.",
-    },
-    {
-      id: 4,
-      title: "Mobile Developer",
-      company: "Appify",
-      location: "Remote",
-      type: "Contract",
-      skills: ["Flutter", "Dart", "REST APIs", "Firebase"],
-      posted: "5 days ago",
-      description:
-        "Develop cross-platform mobile applications using Flutter and Dart. Experience with RESTful APIs and Firebase is required.",
-    },
-    {
-      id: 5,
-      title: "DevOps Engineer",
-      company: "CloudSync",
-      location: "Cairo, Egypt",
-      type: "Full-time",
-      skills: ["AWS", "CI/CD", "Jenkins", "Kubernetes"],
-      posted: "1 week ago",
-      description:
-        "Manage CI/CD pipelines and cloud infrastructure. Experience with AWS and Kubernetes is a must.",
-    },
-    {
-      id: 6,
-      title: "Digital Marketing Specialist",
-      company: "Marketly",
-      location: "Giza, Egypt",
-      type: "Part-time",
-      skills: ["SEO", "Google Ads", "Analytics", "Content Strategy"],
-      posted: "1 week ago",
-      description:
-        "Execute and optimize marketing campaigns across multiple digital platforms. Analyze performance and improve engagement.",
-    },
-    {
-      id: 7,
-      title: "Data Scientist",
-      company: "InsightAI",
-      location: "Cairo, Egypt",
-      type: "Full-time",
-      skills: ["Python", "Pandas", "Machine Learning", "SQL"],
-      posted: "2 weeks ago",
-      description:
-        "Work with large datasets to generate business insights and predictive models. Strong Python and ML experience required.",
-    },
-    {
-      id: 8,
-      title: "Full Stack Developer",
-      company: "WebWorks",
-      location: "Hybrid - Cairo",
-      type: "Hybrid",
-      skills: ["React", "Node.js", "Express", "PostgreSQL"],
-      posted: "2 weeks ago",
-      description:
-        "We’re hiring a full stack developer to work on modern, scalable web apps using React and Node.js.",
-    },
-    {
-      id: 9,
-      title: "Project Manager",
-      company: "SoftBridge",
-      location: "Cairo, Egypt",
-      type: "Full-time",
-      skills: ["Agile", "Scrum", "Communication", "Leadership"],
-      posted: "3 weeks ago",
-      description:
-        "Lead cross-functional teams and ensure timely project delivery following Agile methodologies. Excellent communication is a must.",
-    },
-    {
-      id: 10,
-      title: "QA Engineer",
-      company: "BugZero",
-      location: "Remote",
-      type: "Remote",
-      skills: ["Selenium", "Test Automation", "Jest", "API Testing"],
-      posted: "1 month ago",
-      description:
-        "Ensure product quality through automated and manual testing. Knowledge of Selenium and Jest is preferred.",
-    },
+  // FILTER STATES
+  const [jobTypeFilters, setJobTypeFilters] = useState([]);
+  const [jobRateFilters, setJobRateFilters] = useState([]);
+  const [datePostedFilters, setDatePostedFilters] = useState([]);
+
+  const { q, country } = useParams();
+
+  const countries = [
+    "Egypt",
+    "Saudi Arabia",
+    "United Arab Emirates",
+    "Qatar",
+    "Kuwait",
+    "Bahrain",
+    "Oman",
+    "Jordan",
+    "Lebanon",
+    "Iraq",
+    "Syria",
+    "Yemen",
+    "Libya",
+    "Sudan",
+    "Morocco",
+    "Tunisia",
+    "Algeria",
+    "Palestine",
   ];
+  const finalQuery = q && !countries.includes(q) ? q : null;
+  const finalCountry = country || (q && countries.includes(q) ? q : null);
+
+  const fetchJobs = async () => {
+    const token = JSON.parse(localStorage.getItem("user"))?.token || null;
+
+    try {
+      let response;
+
+      if (finalQuery && finalCountry) {
+        response = await axios.get(
+          `/api/v1/user/jobs/job-search?q=${finalQuery}&country=${finalCountry}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      } else if (finalQuery) {
+        response = await axios.get(
+          `/api/v1/user/jobs/job-search?q=${finalQuery}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+      } else if (finalCountry) {
+        response = await axios.get(
+          `/api/v1/user/jobs/location/${finalCountry}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+      } else {
+        response = await axios.get(`/api/v1/user/jobs/job-search`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+
+      if (response.data.status) {
+        setJobs(response.data.jobs);
+      }
+    } catch (err) {
+      console.error("Error fetching jobs:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, [q, country]);
+
+  useEffect(() => {
+    console.log("Job Type Filters:", jobTypeFilters);
+    console.log("Job Rate Filters:", jobRateFilters);
+    console.log("Date Posted Filters:", datePostedFilters);
+  }, [jobTypeFilters, jobRateFilters, datePostedFilters]);
 
   const handleJobClick = (job) => setSelectedJob(job);
   const handleCloseJobModal = () => setSelectedJob(null);
 
-  // Shared Filters Accordion (to reuse in sidebar + modal)
+  async function handleApplyJobModal() {
+    const token = JSON.parse(localStorage.getItem("user"))?.token || null;
+
+    try {
+      const response = await axios.post(
+        `/api/v1/user/jobs/jobs/${selectedJob._id}/apply`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      Swal.fire({
+        title: response.data.status ? "Applied!" : "Oops!",
+        text: response.data.message,
+        icon: response.data.status ? "success" : "warning",
+        background: response.data.status ? "#d4edda" : "#fff3cd",
+        confirmButtonColor: "#ffc107",
+      });
+    } catch (err) {
+      Swal.fire({
+        title: "Error",
+        text: "You Already Applied.",
+        icon: "error",
+        background: "#f8d7da",
+        confirmButtonColor: "#dc3545",
+      });
+      console.log(err);
+    }
+  }
+
   const FiltersAccordion = () => (
     <div className="accordion" id="filtersAccordion">
-      {/* Job Type */}
       <div className="accordion-item">
         <h2 className="accordion-header" id="headingOne">
           <button
@@ -146,23 +143,30 @@ function FindJobs() {
           aria-labelledby="headingOne"
         >
           <div className="accordion-body d-flex flex-column">
-            {[
-              "Full-time",
-              "Part-time",
-              "Remote",
-              "Hybrid",
-              "Internship",
-              "Contract",
-            ].map((label) => (
-              <label key={label} className="user-select-none">
-                <input type="checkbox" className="me-2" /> {label}
-              </label>
-            ))}
+            {["full-time", "part-time", "remote", "internship", "contract"].map(
+              (label) => (
+                <label key={label} className="user-select-none">
+                  <input
+                    type="checkbox"
+                    className="me-2"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setJobTypeFilters((prev) => [...prev, label]);
+                      } else {
+                        setJobTypeFilters((prev) =>
+                          prev.filter((item) => item !== label)
+                        );
+                      }
+                    }}
+                  />
+                  {label}
+                </label>
+              )
+            )}
           </div>
         </div>
       </div>
 
-      {/* Career Level */}
       <div className="accordion-item">
         <h2 className="accordion-header" id="headingTwo">
           <button
@@ -173,7 +177,7 @@ function FindJobs() {
             aria-expanded="false"
             aria-controls="collapseTwo"
           >
-            Career Level
+            Job Rate
           </button>
         </h2>
         <div
@@ -182,22 +186,28 @@ function FindJobs() {
           aria-labelledby="headingTwo"
         >
           <div className="accordion-body d-flex flex-column">
-            {[
-              "Fresh/Student",
-              "Entry Level",
-              "Mid Level",
-              "Senior Level",
-              "Management",
-            ].map((label) => (
+            {["hourly", "monthly", "yearly"].map((label) => (
               <label key={label} className="user-select-none">
-                <input type="checkbox" className="me-2" /> {label}
+                <input
+                  type="checkbox"
+                  className="me-2"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setJobRateFilters((prev) => [...prev, label]);
+                    } else {
+                      setJobRateFilters((prev) =>
+                        prev.filter((item) => item !== label)
+                      );
+                    }
+                  }}
+                />
+                {label}
               </label>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Date Posted */}
       <div className="accordion-item">
         <h2 className="accordion-header" id="headingThree">
           <button
@@ -219,7 +229,20 @@ function FindJobs() {
           <div className="accordion-body d-flex flex-column">
             {["Today", "This Week", "This Month", "This Year"].map((label) => (
               <label key={label} className="user-select-none">
-                <input type="checkbox" className="me-2" /> {label}
+                <input
+                  type="checkbox"
+                  className="me-2"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setDatePostedFilters((prev) => [...prev, label]);
+                    } else {
+                      setDatePostedFilters((prev) =>
+                        prev.filter((item) => item !== label)
+                      );
+                    }
+                  }}
+                />
+                {label}
               </label>
             ))}
           </div>
@@ -231,7 +254,6 @@ function FindJobs() {
   return (
     <>
       <div className="container">
-        {/* Header */}
         <header className="container p-3 pt-4">
           <Header
             h1={"All Job Opportunities In"}
@@ -241,7 +263,6 @@ function FindJobs() {
           <SearchForm />
         </header>
 
-        {/* Mobile: Show Filters Button */}
         <div className="d-lg-none text-end mb-3">
           <button
             className="apply-btn btn btn-primary"
@@ -251,9 +272,7 @@ function FindJobs() {
           </button>
         </div>
 
-        {/* Main Section */}
         <div className="main-section bg-light d-flex flex-column flex-md-row gap-3 p-3 p-md-5 rounded">
-          {/* Left (Filters) */}
           <div className="left-side-container bg-white rounded d-none d-lg-block">
             <div className="filters-container p-3">
               <h3 className="mb-2 pb-2 border-bottom">Filters</h3>
@@ -261,7 +280,6 @@ function FindJobs() {
             </div>
           </div>
 
-          {/* Right (Jobs) */}
           <div className="right-side-container bg-white rounded">
             <div className="jobs-container p-3">
               <div className="jobs-header border-bottom d-flex justify-content-between align-items-center">
@@ -278,33 +296,39 @@ function FindJobs() {
 
               <div className="jobs-body">
                 <div className="jobs-list">
-                  {jobs.map((job) => (
-                    <div
-                      key={job.id}
-                      className="job border-top py-3"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleJobClick(job)}
-                    >
-                      <h4>{job.title}</h4>
-                      <div className="comp-container d-flex align-items-center gap-2 mb-2">
-                        <img src="https://placehold.co/40" alt="comp-img" />
-                        <p className="m-0 fw-bold">{job.company}</p>
-                        <p className="m-0">-</p>
-                        <p className="m-0">{job.location}</p>
-                      </div>
-                      <span className="bg-light px-1 rounded d-inline-block mb-2">
-                        {job.type}
-                      </span>
-                      <ul className="job-skills list-unstyled d-flex flex-wrap gap-2 text-secondary mb-2">
-                        {job.skills.map((s, i) => (
-                          <li key={i} className="bg-light px-1 rounded">
-                            {s}
+                  {jobs.length === 0 ? (
+                    <p>No jobs found.</p>
+                  ) : (
+                    jobs.map((job) => (
+                      <div
+                        key={job._id} // safer than job.companyId._id
+                        className="job border-top py-3"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleJobClick(job)}
+                      >
+                        <h4>{job.jobTitle}</h4>
+                        <div className="comp-container d-flex align-items-center gap-2 mb-2">
+                          <img src="https://placehold.co/40" alt="comp-img" />
+                          <p className="m-0 fw-bold">
+                            {job.companyId?.companyName || "Unknown Company"}
+                          </p>
+                          <p className="m-0">-</p>
+                          <p className="m-0">{job.jobLocation}</p>
+                        </div>
+                        <span className="bg-light px-1 rounded d-inline-block mb-2">
+                          {job.jobType}
+                        </span>
+                        <ul className="job-skills list-unstyled d-flex flex-wrap gap-2 text-secondary mb-2">
+                          <li className="bg-light px-1 rounded">
+                            Pay: {job.jobMinPay} - {job.jobMaxPay} {job.jobRate}
                           </li>
-                        ))}
-                      </ul>
-                      <p className="m-0 text-success">{job.posted}</p>
-                    </div>
-                  ))}
+                        </ul>
+                        <p className="m-0 text-success">
+                          Posted: {new Date(job.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -312,7 +336,6 @@ function FindJobs() {
         </div>
       </div>
 
-      {/* Filters Modal (for small screens) */}
       {showFilters && (
         <div className="modal show fade d-block" tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
@@ -347,13 +370,12 @@ function FindJobs() {
         </div>
       )}
 
-      {/* Job Details Modal */}
       {selectedJob && (
         <div className="modal show fade d-block" tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered modal-lg">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">{selectedJob.title}</h5>
+                <h5 className="modal-title">{selectedJob.jobTitle}</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -364,26 +386,28 @@ function FindJobs() {
                 <div className="d-flex align-items-center gap-3 mb-3">
                   <img src="https://placehold.co/60" alt="company" />
                   <div>
-                    <h6 className="m-0">{selectedJob.company}</h6>
-                    <small className="text-muted">{selectedJob.location}</small>
+                    <h6 className="m-0">
+                      {selectedJob.companyId?.companyName || "Unknown Company"}
+                    </h6>
+                    <small className="text-muted">
+                      {selectedJob.jobLocation}
+                    </small>
                   </div>
                 </div>
                 <p>
-                  <strong>Job Type:</strong> {selectedJob.type}
+                  <strong>Job Type:</strong> {selectedJob.jobType}
                 </p>
                 <p>
-                  <strong>Posted:</strong> {selectedJob.posted}
+                  <strong>Posted:</strong>{" "}
+                  {new Date(selectedJob.createdAt).toLocaleDateString()}
                 </p>
                 <h6>Description</h6>
-                <p>{selectedJob.description}</p>
-                <h6>Skills Required</h6>
-                <ul className="d-flex flex-wrap gap-2 list-unstyled">
-                  {selectedJob.skills.map((skill, i) => (
-                    <li key={i} className="bg-light px-2 py-1 rounded">
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
+                <p>{selectedJob.jobDescription}</p>
+                <h6>Pay Range</h6>
+                <p>
+                  {selectedJob.jobMinPay} - {selectedJob.jobMaxPay}{" "}
+                  {selectedJob.jobRate}
+                </p>
               </div>
               <div className="modal-footer">
                 <button
@@ -392,7 +416,12 @@ function FindJobs() {
                 >
                   Close
                 </button>
-                <button className="apply-btn btn btn-primary">Apply Now</button>
+                <button
+                  className="apply-btn btn btn-primary"
+                  onClick={handleApplyJobModal}
+                >
+                  Apply Now
+                </button>
               </div>
             </div>
           </div>

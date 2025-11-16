@@ -1,0 +1,93 @@
+/* src/styles/faq.css */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* ===== FAQ ITEM DESIGN ===== */
+.faq-item {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: #fff;
+}
+
+.faq-item:hover {
+  border-color: #ff5722 !important;
+  transform: translateY(-3px);
+}
+
+.faq-item.open {
+  border-color: #ff5722 !important;
+  box-shadow: 0 4px 10px rgba(216,106,26,0.1);
+}
+
+/* ===== ICON ===== */
+.faq-icon i {
+  background-color: #fff5ec;
+  color: #ff5722;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+/* ===== ANSWER ===== */
+.faq-answer {
+  display: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.faq-item.open .faq-answer {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ===== ARROW ===== */
+.faq-arrow {
+  transition: transform 0.3s ease;
+  color: #6c757d;
+}
+
+.faq-item.open .faq-arrow {
+  transform: rotate(180deg);
+  color: #ff5722;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-5px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 992px) {
+  h2 {
+    font-size: 1.6rem;
+  }
+  .faq-item {
+    padding: 0.9rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.4rem;
+  }
+  .faq-icon i {
+    font-size: 1rem;
+    padding: 6px;
+  }
+  .faq-answer {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .faq-item {
+    padding: 0.8rem !important;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+}

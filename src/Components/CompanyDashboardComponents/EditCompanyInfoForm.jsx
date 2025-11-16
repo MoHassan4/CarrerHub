@@ -1,18 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { setCompaniesProfile } from "../services/Company.SignUp.service";
-import Swal from "sweetalert2";
-import { jwtDecode } from "jwt-decode";
+import {
+  updateCompanyInfo,
+  getCompanyInfo,
+} from "../../services/editCompayInfo.service";
 
-function CompanyInfoForm() {
+function EditCompanyInfoForm() {
   const [industry, setIndustry] = useState("");
   const [foundedYear, setFoundedYear] = useState("");
   const [description, setDescription] = useState("");
   const [country, setCountry] = useState("");
-  const [logo, setLogo] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const data = await getCompanyInfo();
+        console.log("Fetched company info:", data);
+
+        // Update state based on actual keys from API
+        setIndustry(data.companyIndustry || "");
+        setFoundedYear(data.foundedYear ? String(data.foundedYear) : "");
+        setDescription(data.companyDescription || "");
+        setCountry(data.companyCountry || "");
+      } catch (err) {
+        console.error("Error fetching company info:", err);
+        setError("Failed to load company information.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,87 +46,41 @@ function CompanyInfoForm() {
       return;
     }
 
-    const companyData = localStorage.getItem("company");
-
-    let token;
-    if (companyData) {
-      const companyObj = JSON.parse(companyData);
-      token = companyObj.token;
-    }
-
-    if (!token) {
-      Swal.fire({
-        icon: "error",
-        title: "Unauthorized",
-        text: "No token found. Please login first.",
-      });
-      return;
-    }
-    const decoded = jwtDecode(token);
-    const companyId = decoded.id;
-
-    const data = {
-      companyId,
-      companyIndustry: industry,
-      foundedYear,
-      companyDescription: description,
-      companyCountry: country,
-      logo: logo || null,
-    };
-
     try {
-      const response = await setCompaniesProfile(data);
-      const resData = response.data;
+      const data = {
+        companyIndustry: industry,
+        foundedYear: foundedYear,
+        companyDescription: description,
+        companyCountry: country,
+      };
 
-      if (resData.status) {
-        Swal.fire({
-          icon: "success",
-          title: "Signup Successful 🎉",
-          text: "Your company account has been created!",
-          timer: 2000,
-          showConfirmButton: false,
-        }).then(() => {
-          navigate("/company-home");
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops!",
-          text: resData.message || "Failed to create company account",
-        });
-      }
+      console.log("Sending data:", data);
 
-      setError("");
+      await updateCompanyInfo(data);
       navigate("/company-home");
     } catch (err) {
-      console.error("Error submitting company info:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Server Error",
-        text:
-          err.response?.data?.message || err.message || "Something went wrong!",
-      });
+      console.error(err);
+      setError("Failed to update company info.");
     }
   };
+
+  if (loading) return <p>Loading company info...</p>;
 
   return (
     <div className="container">
       <form className="form-control p-4" onSubmit={handleSubmit}>
-        <h3>Tell Us About Your Company</h3>
+        <h3>Edit Company Information</h3>
         <p>Provide your company details to help job seekers know you better.</p>
         <hr />
 
         <div className="form-body d-flex flex-column gap-3">
           <div>
-            <label htmlFor="industry" className="form-label">
-              Company Industry *
-            </label>
+            <label className="form-label">Company Industry *</label>
             <select
-              id="industry"
               className="p-2 rounded form-control"
-              required
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
+              required
             >
               <option value="" disabled>
                 Select industry
@@ -120,46 +98,37 @@ function CompanyInfoForm() {
           </div>
 
           <div>
-            <label htmlFor="founded-year" className="form-label">
-              Founded Year *
-            </label>
+            <label className="form-label">Founded Year *</label>
             <input
-              id="founded-year"
               type="number"
-              min="1700"
-              max={new Date().getFullYear()}
               className="p-2 rounded form-control"
-              required
+              min="1800"
+              max={new Date().getFullYear()}
               value={foundedYear}
               onChange={(e) => setFoundedYear(e.target.value)}
+              required
             />
           </div>
 
           <div>
-            <label htmlFor="description" className="form-label">
-              Company Description *
-            </label>
+            <label className="form-label">Company Description *</label>
             <textarea
-              id="description"
               className="p-2 rounded form-control"
               rows="4"
-              required
               placeholder="Briefly describe your company..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+              required
+            />
           </div>
 
           <div>
-            <label htmlFor="country" className="form-label">
-              Headquarters Country *
-            </label>
+            <label className="form-label">Headquarters Country *</label>
             <select
-              id="country"
               className="p-2 rounded form-control"
-              required
               value={country}
               onChange={(e) => setCountry(e.target.value)}
+              required
             >
               <option value="" disabled>
                 Select country
@@ -183,26 +152,10 @@ function CompanyInfoForm() {
             </select>
           </div>
 
-          <div>
-            <label htmlFor="logo" className="form-label">
-              Company Logo Upload
-            </label>
-            <input
-              id="logo"
-              type="file"
-              accept="image/*"
-              className="p-2 rounded form-control"
-              onChange={(e) => setLogo(e.target.files[0])}
-            />
-          </div>
-
           {error && <p className="text-danger">{error}</p>}
 
-          <button
-            type="submit"
-            className="ca-form-btn btn btn-primary py-2 px-3 my-4 align-self-end w-25"
-          >
-            Next
+          <button type="submit" className="btn btn-primary w-25 mt-3">
+            Save
           </button>
         </div>
       </form>
@@ -210,4 +163,4 @@ function CompanyInfoForm() {
   );
 }
 
-export default CompanyInfoForm;
+export default EditCompanyInfoForm;

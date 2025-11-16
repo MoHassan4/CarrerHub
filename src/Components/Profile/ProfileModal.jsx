@@ -1,21 +1,27 @@
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState } from "react";
+import {
+  addNewEudcation,
+  addNewExperience,
+} from "../../services/Users.Get_Update_Profile.service";
 
 function ProfileModal({ show, handleClose, type }) {
   const [experienceData, setExperienceData] = useState({
-    companyName: "",
     jobTitle: "",
-    durationStart: "",
-    durationEnd: "",
+    companyName: "",
+    jobLocation: "",
+    startDate: "",
+    endDate: "",
     description: "",
   });
 
   const [educationData, setEducationData] = useState({
     university: "",
-    degree: "",
     fieldOfStudy: "",
-    durationStart: "",
-    durationEnd: "",
+    degree: "",
+    eduCountry: "",
+    startDate: "",
+    endDate: "",
     description: "",
   });
 
@@ -26,9 +32,19 @@ function ProfileModal({ show, handleClose, type }) {
     else setEducationData({ ...educationData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(type === "experience" ? experienceData : educationData);
-    handleClose(); // Later you can send data to parent or backend here
+    if (type === "experience") {
+      // Call API to add experience
+      await addNewExperience(experienceData);
+      window.location.reload();
+      handleClose();
+    } else {
+      // Call API to add education
+      await addNewEudcation(educationData);
+      window.location.reload();
+      handleClose();
+    }
   };
 
   return (
@@ -59,10 +75,18 @@ function ProfileModal({ show, handleClose, type }) {
               />
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label>Job Location</Form.Label>
+              <Form.Control
+                name="jobLocation"
+                onChange={handleChange}
+                placeholder="Egypt"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Duration Start</Form.Label>
               <Form.Control
                 type="month"
-                name="durationStart"
+                name="startDate"
                 onChange={handleChange}
               />
             </Form.Group>
@@ -70,7 +94,7 @@ function ProfileModal({ show, handleClose, type }) {
               <Form.Label>Duration End</Form.Label>
               <Form.Control
                 type="month"
-                name="durationEnd"
+                name="endDate"
                 onChange={handleChange}
               />
             </Form.Group>
@@ -86,14 +110,6 @@ function ProfileModal({ show, handleClose, type }) {
           </>
         ) : (
           <>
-            <Form.Group className="mb-3">
-              <Form.Label>Degree</Form.Label>
-              <Form.Control
-                name="degree"
-                onChange={handleChange}
-                placeholder="Bachelor's in Computer Science"
-              />
-            </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>University</Form.Label>
               <Form.Control
@@ -111,10 +127,26 @@ function ProfileModal({ show, handleClose, type }) {
               />
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label>Degree</Form.Label>
+              <Form.Control
+                name="degree"
+                onChange={handleChange}
+                placeholder="Bachelor's in Computer Science"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Education Country</Form.Label>
+              <Form.Control
+                name="eduCountry"
+                onChange={handleChange}
+                placeholder="Bachelor's in Computer Science"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Duration Start</Form.Label>
               <Form.Control
                 type="month"
-                name="durationStart"
+                name="startDate"
                 onChange={handleChange}
               />
             </Form.Group>
@@ -122,7 +154,7 @@ function ProfileModal({ show, handleClose, type }) {
               <Form.Label>Duration End</Form.Label>
               <Form.Control
                 type="month"
-                name="durationEnd"
+                name="endDate"
                 onChange={handleChange}
               />
             </Form.Group>

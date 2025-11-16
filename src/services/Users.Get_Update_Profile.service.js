@@ -7,15 +7,58 @@ function getToken() {
   return user?.token || null;
 }
 
+// Get
+
 export async function getUsers() {
   const token = getToken();
-  try {
+  if (token) {
     const response = await axios.get(`${API}/profile/profile`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     return response.data;
-  } catch (err) {
-    console.error("Error in setStep1:", err.response || err);
-    throw err;
+  }
+}
+
+export async function fetchAppliedJobs() {
+  const token = getToken();
+  if (token) {
+    const response = await axios.get(`${API}/user/jobs/applied-jobs`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.status ? response.data.applications || [] : [];
+  }
+  return [];
+}
+
+// Update & Add
+
+export async function addNewExperience(data) {
+  const token = getToken();
+  if (token) {
+    const response = await axios.post(`${API}/register/new-experience`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  }
+}
+
+export async function addNewEudcation(data) {
+  const token = getToken();
+  if (token) {
+    const response = await axios.post(`${API}/register/new-eudcation`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  }
+}
+
+
+export async function updateBasicInfos(data) {
+  const token = getToken();
+  if (token) {
+    const response = await axios.put(`${API}/profile/profile`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
   }
 }

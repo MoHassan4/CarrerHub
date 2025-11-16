@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Components/shared/Header";
 import SearchForm from "../Components/shared/SearchForm";
 
 function JopSearch() {
+  const navigate = useNavigate();
+
   const popularJobTitles = [
     { title: "Frontend Developer", number: 820 },
     { title: "Backend Developer", number: 801 },
@@ -36,7 +38,11 @@ function JopSearch() {
         <h3>Popular jobs</h3>
         <div className="row">
           {popularJobTitles.map((job, index) => (
-            <div key={index} className="col-12 col-md-6 mb-2">
+            <div
+              key={index}
+              className="col-12 col-md-6 mb-2"
+              onClick={() => navigate(`/find-jobs/${job.title}`)}
+            >
               <div className="d-flex justify-content-between border-bottom py-1">
                 <Link className="text-decoration-none orange fw-semibold">
                   {job.title}

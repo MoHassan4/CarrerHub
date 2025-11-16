@@ -4,11 +4,15 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import "../css/ProfileStyle.css";
 import ExperienceProfile from "../Components/Profile/ExperienceProfile";
 import EducationProfile from "../Components/Profile/EducationProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileModal from "../Components/Profile/ProfileModal";
 import SkillsProfile from "../Components/Profile/SkillsProfile";
 import SkillsProfileModal from "../Components/Profile/SkillsProfileModal";
 import BasicInfosProfileModal from "../Components/Profile/BasicInfosProfileModal";
+import {
+  fetchAppliedJobs,
+  getUsers,
+} from "../services/Users.Get_Update_Profile.service";
 
 function Profile() {
   const [showModal, setShowModal] = useState(false);
@@ -31,117 +35,199 @@ function Profile() {
   };
   const handleBasicInfosClose = () => setShowBasicInfosModal(false);
 
+  const [userData, setUserData] = useState(null);
+  const [appliedJobs, setAppliedJobs] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getUsers();
+        setUserData(res.data);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+
+    const getJobs = async () => {
+      const jobs = await fetchAppliedJobs();
+      setAppliedJobs(jobs);
+    };
+
+    fetchUser();
+    getJobs();
+  }, []);
+
   return (
     <div className="profile container">
-      <div className="">
-        <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-center align-items-center bg-light">
-          <button
-            onClick={handleBasicInfos}
-            className="text-warning align-self-start mt-1 fs-5 fw-bold border-0 bg-transparent"
-          >
-            Edit
-          </button>
-          <FontAwesomeIcon
-            icon={faUserCircle}
-            size="4x"
-            className="text-warning"
-          />
-          <h4 className="mt-3">Amr Mousa</h4>
-          <p className="text-secondary">Job Seeker</p>
+      {/* Profile Header */}
+      <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-center align-items-center bg-light mb-4">
+        <button
+          onClick={handleBasicInfos}
+          className="orange align-self-start mt-1 fs-5 fw-bold border-0 bg-transparent"
+        >
+          Edit
+        </button>
+        <FontAwesomeIcon icon={faUserCircle} size="4x" className="orange" />
+        <h4 className="mt-3">
+          {userData?.user?.firstName} {userData?.user?.lastName}
+        </h4>
+        <p className="text-secondary">Job Seeker</p>
+      </div>
+
+      <div className="d-flex flex-column gap-4">
+        {/* Basic Info */}
+        <div className="card p-3 shadow-lg w-100">
+          <h5>Your Informations</h5>
+          <div className="basic-info email">
+            <p>Email</p>
+            <p className="orange-bg">{userData?.user?.email}</p>
+          </div>
+          <hr />
+          <div className="basic-info phone">
+            <p>Phone</p>
+            <p className="orange-bg">
+              {userData?.user?.phoneNumber || "No phone"}
+            </p>
+          </div>
         </div>
 
-        <div className="row pt-5 gap-5 gap-lg-0 justify-content-center">
-          {/* Basic Info Section */}
-          <div className="basic-infos col-12 col-md-6 col-lg-4 text-center">
-            <h5 className="mb-3">Your Informations</h5>
-            <div className="p-3 rounded shadow-lg d-flex flex-column justify-content-between">
-              <div className="basic-info email">
-                <p>Email</p>
-                <p className="bg-warning">test@gmail.com</p>
-              </div>
-              <hr />
-              <div className="basic-info phone">
-                <p>Phone</p>
-                <p className="bg-warning">01015052567</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Experience Section */}
-          <div className="experience col-12 col-md-6 col-lg-4 text-center">
-            <h5 className="mb-3">Experience</h5>
-            <div className="p-3 rounded shadow-lg bg-light d-flex flex-column gap-3">
+        {/* Experience */}
+        <div className="card p-3 shadow-lg w-100">
+          <h5>Experience</h5>
+          {userData?.experiences && userData.experiences.length > 0 ? (
+            userData.experiences.map((exp, index) => (
               <ExperienceProfile
-                title="Frontend Developer"
-                present="Freelance — 2023–Present"
-                details="Building responsive websites using React.js and Bootstrap."
+                key={index}
+                title={exp.jobTitle}
+                present={`${exp.companyName} — ${new Date(
+                  exp.startDate
+                ).getFullYear()}–${new Date(exp.endDate).getFullYear()}`}
+                details={exp.description}
               />
-              <ExperienceProfile
-                title="Web Developer Intern"
-                present="Depi Program — 2024"
-                details="Worked on full-stack projects using Node.js and Express."
-              />
-              <hr />
-              <button
-                className="btn btn-warning fw-bold"
-                onClick={() => handleShow("experience")}
-              >
-                Add Experience
-              </button>
-            </div>
-          </div>
+            ))
+          ) : (
+            <p className="text-secondary">No experience added yet</p>
+          )}
+          <hr />
+          <button
+            className="btn orange-bg fw-bold"
+            onClick={() => handleShow("experience")}
+          >
+            Add Experience
+          </button>
+        </div>
 
-          {/* Education Section */}
-          <div className="education col-12 col-md-6 col-lg-4 text-center">
-            <h5 className="mb-3">Education</h5>
-            <div className="py-2 px-3 rounded shadow-lg d-flex flex-column justify-content-center bg-light mb-4">
+        {/* Education */}
+        <div className="card p-3 shadow-lg w-100">
+          <h5>Education</h5>
+          {userData?.educations && userData.educations.length > 0 ? (
+            userData.educations.map((edu, index) => (
               <EducationProfile
-                degree="Bachelor's in Computer Science"
-                university="EGYPT - O6U"
-                duration="2016 - 2020"
+                key={index}
+                degree={edu.degree}
+                university={`${edu.eduCountry} - ${edu.university}`}
+                duration={`${new Date(
+                  edu.startDate
+                ).getFullYear()} - ${new Date(edu.endDate).getFullYear()}`}
               />
-              <hr />
-              <button
-                className="btn btn-warning fw-bold"
-                onClick={() => handleShow("education")}
-              >
-                Add Education
-              </button>{" "}
-            </div>
+            ))
+          ) : (
+            <p className="text-secondary">No education added yet</p>
+          )}
+          <hr />
+          <button
+            className="btn orange-bg fw-bold"
+            onClick={() => handleShow("education")}
+          >
+            Add Education
+          </button>
+        </div>
+
+        {/* Skills */}
+        <div className="card p-3 shadow-lg w-100">
+          <h5>Skills</h5>
+          {userData?.profile?.skills && userData.profile.skills.length > 0 ? (
+            userData.profile.skills.map((skill, index) => (
+              <SkillsProfile key={index} skill={skill} />
+            ))
+          ) : (
+            <p className="text-secondary">No skills added yet</p>
+          )}
+          <hr />
+          <button
+            className="btn orange-bg fw-bold w-100"
+            onClick={handleSkillShow}
+          >
+            Add Skill
+          </button>
+        </div>
+
+        {/* Applied Jobs */}
+        <div className="card p-3 shadow-lg w-100">
+          <h5>Jobs You Applied For</h5>
+          <div
+            className="d-flex flex-column gap-2"
+            style={{ maxHeight: "180px", overflowY: "auto" }}
+          >
+            {appliedJobs?.length > 0 ? (
+              appliedJobs.map((job) => (
+                <div
+                  key={job._id}
+                  className="p-2 border rounded bg-white d-flex flex-column align-items-start"
+                >
+                  <h6 className="mb-1">{job.jobId?.jobTitle}</h6>
+                  <small className="text-muted">
+                    {job.companyId?.companyName} — {job.jobId?.jobLocation}
+                  </small>
+                  <span className="badge orange-bg text-dark mt-1">
+                    {job.jobId?.jobType}
+                  </span>
+                  <small className="text-black mt-1">
+                    Applied: {new Date(job.appliedAt).toLocaleDateString()}
+                  </small>
+                  <small
+                    className={
+                      job.status === "pending"
+                        ? "text-warning mt-1"
+                        : job.status === "rejected"
+                        ? "text-danger mt-1"
+                        : "text-success mt-1"
+                    }
+                  >
+                    <span className="text-black">Status: </span>
+                    {job.status === "pending"
+                      ? "Under Review"
+                      : job.status === "rejected"
+                      ? "Rejected"
+                      : job.status === "accepted"
+                      ? "Accepted"
+                      : "Unknown"}
+                  </small>
+                </div>
+              ))
+            ) : (
+              <p className="text-secondary">
+                You haven’t applied to any jobs yet
+              </p>
+            )}
           </div>
-
-          <div className="skills col-12 col-md-6 col-lg-4 text-center my-3">
-            <h5 className="mb-3">Skills</h5>
-            <div className="p-3 rounded shadow-lg bg-light mb-3">
-              <SkillsProfile skill="HTMl" />
-              <SkillsProfile skill="React" />
-              <hr />
-              <button
-                className="btn btn-warning fw-bold w-100"
-                onClick={handleSkillShow}
-              >
-                Add Skill
-              </button>
-            </div>
-          </div>
-
-          <ProfileModal
-            show={showModal}
-            handleClose={handleClose}
-            type={modalType}
-          />
-
-          <SkillsProfileModal
-            show={showSkillModal}
-            handleClose={handleSkillModalClose}
-          />
-
-          <BasicInfosProfileModal
-            show={showBasicInfosModal}
-            handleClose={handleBasicInfosClose}
-          />
         </div>
       </div>
+
+      {/* Modals */}
+      <ProfileModal
+        show={showModal}
+        handleClose={handleClose}
+        type={modalType}
+      />
+      <SkillsProfileModal
+        show={showSkillModal}
+        handleClose={handleSkillModalClose}
+      />
+      <BasicInfosProfileModal
+        show={showBasicInfosModal}
+        handleClose={handleBasicInfosClose}
+      />
     </div>
   );
 }

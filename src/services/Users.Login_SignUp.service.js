@@ -1,12 +1,10 @@
-// Users.Login_SignUp.service.js
 import axios from "axios";
 
-const API = "/api/v1"; // <-- backend port
+const API = "/api/v1"; 
 
 
 
-
-// ===== AUTH =====
+// ===== Account =====
 export async function getUsersData(data) {
   return await axios.post(`${API}/auth/sign-in`, data);
 }
