@@ -1,0 +1,3 @@
+const {PORT,CONNECTION_URL , JWT_KEY , SENDER_EMAIL , SENDER_APP_PASSWORD , CLOUD_NAME , CLOUDINARY_API_KEY , CLOUDINARY_API_SECRET} = process.env;
+
+module.exports = {port:PORT,connectionUrl : CONNECTION_URL , jwtSecretkey : JWT_KEY , senderEmail : SENDER_EMAIL , senderAppPassword : SENDER_APP_PASSWORD , cloudName:CLOUD_NAME , cloudApiKey :CLOUDINARY_API_KEY , api_secret : CLOUDINARY_API_SECRET };
